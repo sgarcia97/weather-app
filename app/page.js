@@ -1,14 +1,20 @@
+"use client"
 import Image from "next/image";
 import igm from "../public/globe.svg"
 import Landing from "./components/Landing"
 import Item from "./components/Item"
 import PageTemplate from "./components/PageTemplate"
-import { data } from "./api/weather"
+import { cdata } from "./api/weather"
+import { useState, useEffect } from "react"
 
 const Page = () => {
-
+  const [data, setData] = useState({})
+  useEffect(()=>{cdata.then(d => {setData(d); })},[])
+  console.log(data)
   return (
+
     <>
+     
       <PageTemplate>
         <Landing/>
         <div className="section-title"><Image alt="weather" width={30} height={30} src={igm}/>{data.location.name}, {data.location.region} </div>

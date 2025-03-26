@@ -1,20 +1,22 @@
 
-export const currentWeatherData = async () => {
+const getData = async () => {
     const url = "https://api.weatherstack.com/current?access_key="+process.env.PUBLIC_NEXT_ANTI+"&query=fetch:ip";
     const options = {
         method: "GET",
     };
-
+        
     try {
         const response = await fetch(url, options);
-        const result = await response.text();
-        console.log(result);
-    } catch (error) {
-    console.error(error);
+        const result = await response.json();
+        return result;
+    }catch(error) {
+       
     }
 }
 
-export const searchWeatherData = async (location) => {
+export const cdata = getData()
+
+const searchWeatherData = async (location) => {
     const url = "https://api.weatherstack.com/current?access_key="+process.env.PUBLIC_NEXT_ANTI+"&query="+location;
     const options = {
         method: "GET",
@@ -23,13 +25,13 @@ export const searchWeatherData = async (location) => {
     try {
         const response = await fetch(url, options);
         const result = await response.text();
-        console.log(result);
+ 
     } catch (error) {
     console.error(error);
     }
 }
 
-export const data = {
+export const dat = {
     "request": {
         "type": "IP",
         "query": "50.99.179.137",
