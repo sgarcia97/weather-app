@@ -207,3 +207,23 @@ footer{
     color-scheme: dark;
   }
 }
+
+@media screen and (max-width:700){
+  .main{
+    padding:10px;
+  }
+
+  .section{
+    display:grid;
+    grid-template-columns: 1fr;
+  }
+
+  .section1{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .item{
+    width:inherit;
+  }
+}

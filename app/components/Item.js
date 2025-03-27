@@ -1,6 +1,6 @@
 
 
-const Item = ({title, unit, val}) => {
+const Item = ({title, unit, val=""}) => {
     return(
         <div className="item">
             <div className="item-title">{title}</div>

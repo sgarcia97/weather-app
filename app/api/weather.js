@@ -1,6 +1,6 @@
 
 const getData = async () => {
-    const url = "https://api.weatherstack.com/current?access_key="+process.env.PUBLIC_NEXT_ANTI+"&query=fetch:ip";
+    const url = "https://api.weatherapi.com/v1/current.json?q=auto:ip&key="+process.env.NEXT_PUBLIC_ANTI;
     const options = {
         method: "GET",
     };
@@ -8,13 +8,13 @@ const getData = async () => {
     try {
         const response = await fetch(url, options);
         const result = await response.json();
-        return result;
+        return result
     }catch(error) {
-       
+       return error.message
     }
-}
+  }
 
-export const cdata = getData()
+export const weatherData = getData()
 
 const searchWeatherData = async (location) => {
     const url = "https://api.weatherstack.com/current?access_key="+process.env.PUBLIC_NEXT_ANTI+"&query="+location;
