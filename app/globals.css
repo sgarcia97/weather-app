@@ -226,4 +226,8 @@ footer{
   .item{
     width:inherit;
   }
+
+  .item-val{
+    font-size:var(--elarge)
+  }
 }
