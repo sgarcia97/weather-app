@@ -57,7 +57,7 @@ body {
 }
 
 .landing-title{
-  font-size:var(--elarge);
+  font-size:var(--large);
   font-weight:600;
 }
 
@@ -71,6 +71,19 @@ body {
   font-family:var(--font);
   font-size:var(--medium);
   outline:none;
+}
+
+.search-item{
+ display:flex;
+ gap:10px;
+ align-items: center;
+ justify-content: flex-start;
+padding:5px;
+}
+
+.search-results{
+  display:grid;
+  width:400px;
 }
 
 
@@ -140,7 +153,7 @@ a {
 }
 
 .section-title{
-  font-size:var(--medium);
+  font-size:var(--normal);
   font-weight:600;
   margin-inline:20px;
   display:flex;
@@ -211,7 +224,7 @@ a {
 .forecast-wrapper{
   display:grid;
   grid-template-columns: repeat(3,1fr);
-  gap:20;
+  gap:20px;
 }
 
 .forecast{
