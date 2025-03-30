@@ -11,7 +11,7 @@ import { useState, useEffect } from "react"
 import { useParams } from "next/navigation"
 
 const Page = () => {
-    const [data, setData] = useState("")
+    const [data, setData] = useState(null)
     const params = useParams()
     useEffect(()=>{
         const forecastData = async () => {
@@ -29,11 +29,12 @@ const Page = () => {
             }
           }
         forecastData()
-    },[])
+    },[params])
    
-
+console.log(data)
   return (
-    <>
+
+   <>
       <PageTemplate>
         <Landing/>
         <div className="section-title"><Image alt="weather" width={30} height={30} src={location}/>{data.location.name}, {data.location.region} </div>
