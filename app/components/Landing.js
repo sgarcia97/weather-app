@@ -4,10 +4,10 @@ import { useState } from "react"
 const Landing = () => {
 
     const [search, setSearch] = useState(null)
-    const [data, setData] = useState(null)
+    const [data, setData] = useState([])
     
     const searchWeatherData = async (location) => {
-        const url = "https://api.weatherapi.com/v1/current.json?q="+location+"&key="+process.env.NEXT_PUBLIC_ANTI;
+        const url = "https://api.weatherapi.com/v1/search.json?q="+location+"&key="+process.env.NEXT_PUBLIC_ANTI;
         const options = {
             method: "GET",
         };
@@ -28,8 +28,10 @@ const Landing = () => {
     return (
         <div className="landing">
             <div className="landing-title">Climapp</div>
-            <input type="search" onChange={handleSearch} placeholder="Search for weather in your area"/>
-            <div>Start searching</div>
+            <input type="search" onChange={(e)=>searchWeatherData(e.target.value)} placeholder="Search for weather in your area"/>
+            <div>{data.map((res,i)=>{
+                return <div key={i}>{res.name}</div>
+            })}</div>
         </div>
     )
 }
