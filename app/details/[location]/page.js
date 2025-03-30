@@ -1,32 +1,37 @@
 "use client"
-import Image from "next/image";
-import igm from "../public/globe.svg"
-import temp from "../public/svg/060-temperature.svg"
-import fore from "../public/svg/021-summer.svg"
-import location from "../public/location.svg"
-import Landing from "./components/Landing"
-import Item from "./components/Item"
-import PageTemplate from "./components/PageTemplate"
-import { fData, forecastdat, currentdat } from "./api/weather"
+import Image from "next/image"
+import temp from "../../../public/svg/060-temperature.svg"
+import fore from "../../../public/svg/021-summer.svg"
+import location from "../../../public/location.svg"
+import Landing from "../../components/Landing"
+import Item from "../../components/Item"
+import PageTemplate from "../../components/PageTemplate"
+import { fData, forecastdat, currentdat } from "../../api/weather"
 import { useState, useEffect } from "react"
 
 const Page = () => {
-  /*
-  const [data, setData] = useState(null)
-  useEffect(()=>{
-    fData.then((d)=>setData(d))
-  },[])
+    const [data, setData] = useState("")
 
- if(!data) return <div>Loading...</div>*/
+    useEffect(()=>{
+        const forecastData = async () => {
+            const url = "https://api.weatherapi.com/v1/forecast.json?q=auto:ip&days=3&aqi=yes&alerts=yes&key="+process.env.NEXT_PUBLIC_ANTI;
+            const options = {
+                method: "GET",
+            };
+                
+            try {
+                const response = await fetch(url, options);
+                const result = await response.json();
+                setData(result)
+            }catch(error) {
+               return error.message
+            }
+          }
+        forecastData()
+    },[])
+   
 
- const weatherIcon = (weather) => {
-
- }
-
- const data = forecastdat;
   return (
-
-    
     <>
       <PageTemplate>
         <Landing/>
