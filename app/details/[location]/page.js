@@ -31,7 +31,6 @@ const Page = () => {
         forecastData()
     },[params])
    
-console.log(data)
   return (
 
    <>
