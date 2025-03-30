@@ -8,13 +8,14 @@ import Item from "../../components/Item"
 import PageTemplate from "../../components/PageTemplate"
 import { fData, forecastdat, currentdat } from "../../api/weather"
 import { useState, useEffect } from "react"
+import { useParams } from "next/navigation"
 
 const Page = () => {
     const [data, setData] = useState("")
-
+    const params = useParams()
     useEffect(()=>{
         const forecastData = async () => {
-            const url = "https://api.weatherapi.com/v1/forecast.json?q=auto:ip&days=3&aqi=yes&alerts=yes&key="+process.env.NEXT_PUBLIC_ANTI;
+            const url = "https://api.weatherapi.com/v1/forecast.json?q="+params.location+"&days=3&aqi=yes&alerts=yes&key="+process.env.NEXT_PUBLIC_ANTI;
             const options = {
                 method: "GET",
             };
