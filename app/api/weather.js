@@ -29,9 +29,9 @@ const currentData = async () => {
     }
   }
 
-const astronomyData = async (location) => {
+const astronomyData = async () => {
     const d = new Date('Y-m-d')
-    const url = "https://api.weatherapi.com/v1/astronomy.json?q=auto:ip&dt="+d+"&key="+process.env.PUBLIC_NEXT_ANTI+"&query="+location;
+    const url = "https://api.weatherapi.com/v1/astronomy.json?q=auto:ip&dt="+d+"&key="+process.env.PUBLIC_NEXT_ANTI;
     const options = {
         method: "GET",
     };
@@ -47,7 +47,7 @@ const astronomyData = async (location) => {
 
 export const cData = currentData()
 export const fData = forecastData()
-export const aData = astronomyData()
+//export const aData = astronomyData()
 
 export const currentdat = {
     "location": {
