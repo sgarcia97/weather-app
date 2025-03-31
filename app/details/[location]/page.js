@@ -24,14 +24,15 @@ const Page = () => {
                 const response = await fetch(url, options);
                 const result = await response.json();
                 setData(result)
+                
             }catch(error) {
                return error.message
             }
           }
         forecastData()
-    },[params])
-   
-console.log(data)
+    },[params.location])
+
+if(!data){ return <div>Loading...</div>}
   return (
 
    <>
