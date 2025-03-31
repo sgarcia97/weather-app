@@ -31,12 +31,12 @@ const Page = () => {
 console.log(data)
 
             
-  let icon = weatherIcons.find((value)=>{
-        return value.code === data.current.condition.code
-      })
+  
   
  if(!data) return <div className="loader"><Image src={Mist} alt="" width={50} height={50} />Loading weather...</div>
-
+ let icon = weatherIcons.find((value)=>{
+  return value.code === data.current.condition.code
+})
   return (
 
     
