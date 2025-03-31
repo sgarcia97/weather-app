@@ -31,7 +31,6 @@ const Page = () => {
           }
         forecastData()
     },[params.location])
-    console.log(data)
 
 if(!data){ return <div>Loading...</div>}
   return (
