@@ -376,6 +376,10 @@ footer{
     grid-template-columns: 1fr;
   }
 
+  .forecast-img-large{
+  width:200px;
+  height:200px;
+}
   .section1{
     display:grid;
     grid-template-columns: 1fr 1fr;
@@ -384,6 +388,8 @@ footer{
   .item{
     width:inherit;
   }
+  
+  
 
   .item-val{
     font-size:var(--elarge)
