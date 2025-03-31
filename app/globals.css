@@ -67,10 +67,15 @@ body {
   width:400px;
   border-radius:10px;
   padding-block:5px;
-  padding-inline:20px;
+  padding-left:40px;
   font-family:var(--font);
-  font-size:var(--medium);
+  font-size:var(--normal);
   outline:none;
+  background-image:url(../public/search.svg);
+  background-size:cover;
+  background-position: 15px center;
+  background-size:15px;
+  background-repeat:no-repeat;
 }
 
 .search-item{
@@ -99,15 +104,12 @@ a {
 }
 
 .section1{
-  padding:20px;
   display:flex;
   flex-flow:row wrap;
   gap:20px;
 }
 
 .section2{
-
-  padding:20px;
   display:grid;
   gap:20px;
   align-content: start;
@@ -155,13 +157,13 @@ a {
 .section-title{
   font-size:var(--normal);
   font-weight:600;
-  margin-inline:20px;
   display:flex;
   flex-flow:row nowrap;
   align-items: center;
   gap:10px;
-  padding-bottom:20px;
+  padding-bottom:10px;
   border-bottom: solid 1px #202020;
+  opacity:0.6;
 }
 
 .section-title-small{
@@ -169,6 +171,7 @@ a {
   align-items:center;
   gap:10px;
   font-weight:600;
+  padding-block:10px;
 }
 
 .section-ttile-small img{
@@ -184,7 +187,6 @@ a {
 /* Items */
 .item{
   width:200px;
-  height:200px;
   background:linear-gradient(140deg,#252525,#101010);
   border-radius:20px;
   padding:20px;
@@ -231,17 +233,76 @@ a {
   border:solid 1px #303030;
   padding:20px;
   border-radius: 10px;
+  display:flex;
+  flex-flow:column nowrap;
+  align-items: center;
 }
 
 .forecast-temp{
   display:flex;
   align-items: center;
   justify-content: space-between;
+  width:100%
+}
+
+.forecast-img{
+  width:40px;
+  height:40px;
+}
+
+.forecast-img-medium{
+  width:80px;
+  height:80px;
+}
+
+.h-align{
+  display:flex;
+  align-items: center;
+  gap:5px;
+}
+
+.cloudy{
+  background-image: url(../public/weather/fill/svg/cloudy.svg);
+}
+
+.overcast{
+  background-image: url(../public/weather/fill/svg/overcast.svg);
+}
+
+.sun{
+  background-image: url(../public/weather/fill/svg/cloudy.svg);
+}
+
+.mist{
+  background-image: url(../public/weather/fill/svg/mist.svg);
+}
+
+.hourly-wrapper{
+  display:flex;
+  flex-flow:row nowrap;
+  overflow: auto;
+  gap:10px;
+  padding-bottom:10px;
+}
+
+.hour{
+  border:solid 1px #303030;
+  padding:20px;
+  border-radius: 10px;
+  display:flex;
+  flex-flow:column nowrap;
+  align-items: center;
+  gap:20px;
+  white-space:nowrap
 }
 
 /* Header */
 header{
-  padding:30px;
+  padding:20px;
+  z-index:5;
+  position:sticky;
+  top:0px;
+  background-color:#000000;
 }
 
 nav{
@@ -249,6 +310,16 @@ nav{
   display:flex;
   flex-flow:row nowrap;
   justify-content: space-between;
+  gap:20px;
+  align-items: center;
+}
+
+.logo{
+  font-weight:600
+}
+
+.links{
+  display:flex;
   gap:20px;
   align-items: center;
 }
@@ -268,7 +339,7 @@ footer{
 
 @media screen and (max-width:700px){
   .main{
-    padding:10px;
+    padding:20px;
   }
 
   .section{
