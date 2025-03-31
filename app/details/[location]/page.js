@@ -4,7 +4,12 @@ import temp from "../../../public/svg/060-temperature.svg"
 import fore from "../../../public/svg/021-summer.svg"
 import Hourly from "../../../public/hourly.svg"
 import Daily from "../../../public/daily-calendar.svg"
+import Mist from "../../../public/weather/fill/svg/mist.svg"
 import Raindrops from "../../../public/weather/fill/svg/raindrops.svg"
+import Sunrise from "../../../public/weather/fill/svg/sunrise.svg"
+import Sunset from "../../../public/weather/fill/svg/sunset.svg"
+import Moonrise from "../../../public/weather/fill/svg/moonrise.svg"
+import Moonset from "../../../public/weather/fill/svg/moonset.svg"
 import Moon from "../../../public/moon-stars.svg"
 import location from "../../../public/location.svg"
 import { weatherIcons } from "../../api/weathericons"
@@ -36,13 +41,13 @@ const Page = () => {
           }
         forecastData()
     },[params.location])
-
-if(!data){ return <div>Loading...</div>}
+console.log(data)
+if(!data){ return <div className="loader"><Image src={Mist} alt="" width={50} height={50} />Loading weather...</div>}
   return (
 
     <>
       <PageTemplate>
-        <Landing title="Welcome to ClimApp"/>
+        <Landing title={params.location}/>
         <div className="section-title"><Image alt="weather" width={30} height={30} src={location}/>{data.location.name}, {data.location.country} </div>
         <div className="section">
           <div className="section2">
@@ -55,13 +60,14 @@ if(!data){ return <div>Loading...</div>}
             <div className="highlight-title">{data.current.condition.text}</div>
             </div>
             </div>
-            <div className="section-title-small"><Image src={Hourly} width={30} height={30} alt=""/>Hourly Forecast </div>
+            <div className="section-title-small"><Image src={Hourly} width={20} height={20} alt=""/>Hourly Forecast </div>
             <div className="hourly-wrapper">
             {
-              
-              data.forecast.forecastday[0].hour.map((val,i)=>{
+              data.forecast.forecastday.map((day,i)=>(
+              day.hour.map((val,i)=>{
                 let h = new Date().getHours()
-                if(i >= h){
+                //let dd = new Date().getDate()
+                //if(i >= h){
                 let hf = i
                 if(i == h){
                   hf = "Now"
@@ -72,13 +78,14 @@ if(!data){ return <div>Loading...</div>}
                 })
                 return <div className="hour" key={i}>
                   <div>{hf}</div>
-                  <div class={`forecast-img ${ico.icon}`}></div>
+                  <div className={`forecast-img `}></div>
                   <div>{Math.round(val.temp_c)}&deg; | <span style={{color:"#999999"}}>{Math.round(val.windchill_c)}&deg;</span></div></div>
-              }
+              //}
               })
+              ))
             }
             </div>
-            <div className="section-title-small"><Image src={Daily} width={30} height={30} alt=""/>Daily Forecast</div>
+            <div className="section-title-small"><Image src={Daily} width={20} height={20} alt=""/>Daily Forecast</div>
             <div className="forecast-wrapper">
               {
                 data.forecast.forecastday.map((day,i)=>{
@@ -98,7 +105,7 @@ if(!data){ return <div>Loading...</div>}
                   return <div key={i} className="forecast">
                     <div>{d}</div>
                     <div>{day.day.condition.code}</div>
-                    <div className={`forecast-img-medium`} width={20} height={20} unoptimized/>
+                    <div className={`forecast-img-medium ${ic.icon}`}></div>
                     <div className="h-align"><Image alt="" width={20} height={20} src={Raindrops}/>{day.day.daily_chance_of_rain}%</div>
                     <div>{day.day.totalprecip_mm}</div>
                     <div className="forecast-temp">
@@ -108,7 +115,7 @@ if(!data){ return <div>Loading...</div>}
                 })
               }
             </div>
-            <div className="section-title-small"><Image src={Moon} width={30} height={30} alt=""/>Astronomy Data</div>
+            <div className="section-title-small"><Image src={Moon} width={20} height={20} alt=""/>Astronomy Data</div>
             <div>
              <table>
                              <tbody>
