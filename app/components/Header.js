@@ -5,7 +5,7 @@ import Home from "../../public/house-blank.svg"
 import Setting from "../../public/customize.svg"
 import Heart from "../../public/heart.svg"
 import Image from "next/image"
-
+import { useRouter } from "next/router"
 
 const Header = () => {
 
@@ -14,9 +14,9 @@ const Header = () => {
             <nav>
                 <div className="logo">ClimApp</div>
                 <div className="links">
-                    <Link href="/"><Image alt ="" src={Home} width={20}/></Link>
-                    <Link href="/favourites"><Image alt ="" src={Heart} width={20}/></Link>
-                    <Link href="/settings"><Image alt ="" src={Setting} width={20}/></Link>
+                    <Link href="/"><Image className="nav-link" alt ="" src={Home} width={20}/></Link>
+                    <Link href="/favourites"><Image className="nav-link" alt ="" src={Heart} width={20}/></Link>
+                    <Link href="/settings"><Image className="nav-link" alt ="" src={Setting} width={20}/></Link>
                 </div>
                 <button className="button-small" >Login</button>
             </nav>
