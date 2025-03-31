@@ -47,7 +47,7 @@ if(!data){ return <div className="loader"><Image src={Mist} alt="" width={50} he
 
     <>
       <PageTemplate>
-        <Landing title="Welcome to ClimApp"/>
+        <Landing title={params.location}/>
         <div className="section-title"><Image alt="weather" width={30} height={30} src={location}/>{data.location.name}, {data.location.country} </div>
         <div className="section">
           <div className="section2">
