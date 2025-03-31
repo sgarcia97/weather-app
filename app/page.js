@@ -11,26 +11,28 @@ import { fData, forecastdat, currentdat } from "./api/weather"
 import { useState, useEffect } from "react"
 
 const Page = () => {
-  /*
+  
   const [data, setData] = useState(null)
+  const [def, setDef] = useState("Calgary")
+
   useEffect(()=>{
     fData.then((d)=>setData(d))
   },[])
 
- if(!data) return <div>Loading...</div>*/
+ if(!data) return <div>Loading...</div>
 
  const weatherIcon = (weather) => {
 
  }
 
- const data = forecastdat;
+
   return (
 
     
     <>
       <PageTemplate>
-        <Landing/>
-        <div className="section-title"><Image alt="weather" width={30} height={30} src={location}/>{data.location.name}, {data.location.region} </div>
+        <Landing title="Welcome to ClimApp"/>
+        <div className="section-title"><Image alt="weather" width={30} height={30} src={location}/>{data.location.name}, {data.location.country} </div>
         <div className="section">
           <div className="section2">
             <div className="section-title-small"><Image src={temp} width={30} height={30} alt=""/>Today&apos;s Temperature</div>

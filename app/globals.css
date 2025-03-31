@@ -248,6 +248,7 @@ nav{
   position:relative;
   display:flex;
   flex-flow:row nowrap;
+  justify-content: space-between;
   gap:20px;
   align-items: center;
 }

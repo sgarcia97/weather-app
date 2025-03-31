@@ -37,8 +37,8 @@ if(!data){ return <div>Loading...</div>}
 
    <>
       <PageTemplate>
-        <Landing/>
-        <div className="section-title"><Image alt="weather" width={30} height={30} src={location}/>{data.location.name}, {data.location.region} </div>
+        <Landing title={params.location}/>
+        <div className="section-title"><Image alt="weather" width={30} height={30} src={location}/>{data.location.name}, {data.location.country} </div>
         <div className="section">
           <div className="section2">
             <div className="section-title-small"><Image src={temp} width={30} height={30} alt=""/>Today&apos;s Temperature</div>
