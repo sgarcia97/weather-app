@@ -50,11 +50,12 @@ console.log(data)
            
             <div className="highlight-val">
             <div className={`forecast-img-large ${icon.icon}`}></div>
-              <span>{Math.round(data.current.temp_c)}&deg;</span>
+             <div> <span>{Math.round(data.current.temp_c)}&deg;</span>
             <div className="highlight-desc">
               <div>Feels like {Math.round(data.current.feelslike_c)}&deg;</div>
             <div>Wind Chill {Math.round(data.current.windchill_c)}&deg;</div>
             <div className="highlight-title">{data.current.condition.text}</div>
+            </div>
             </div>
             </div>
             <div className="section-title-small"><Image src={Hourly} width={20} height={20} alt=""/>Hourly Forecast </div>
