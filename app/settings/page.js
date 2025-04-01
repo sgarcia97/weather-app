@@ -1,14 +1,14 @@
 import PageTemplate from "../components/PageTemplate"
-
+import Setting from "../components/Setting"
+import Spacer from "../components/Spacer"
 
 const Page = () => {
   return (
     <>
       <PageTemplate title="Your Settings">
-     
-        <div className="section1">
-          
-        </div>
+        <Spacer/>
+        <Setting name="Your saved locations"/>
+        <Setting name="Logout"/>
       </PageTemplate>
     </>
   )

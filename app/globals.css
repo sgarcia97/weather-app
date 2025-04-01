@@ -1,6 +1,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --blue:#3291d5;
 
   /* Font sizes */
   --font:Arial, Helvetica, sans-serif;
@@ -90,6 +91,11 @@ body {
   background-position: 15px center;
   background-size:15px;
   background-repeat:no-repeat;
+}
+
+.landing input:focus{
+  outline:solid 2px var(--blue);
+  outline-offset: 2px;
 }
 
 .search-item{
@@ -219,10 +225,13 @@ a {
 
 .item-title{
   color:#999999;
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .item-val{
-  font-size:var(--eelarge);
+  font-size:var(--elarge);
   font-weight:600;
   display:flex;
   flex-flow:column nowrap;
@@ -290,11 +299,71 @@ a {
 }
 
 .sun{
-  background-image: url(../public/weather/fill/svg/cloudy.svg);
+  background-image: url(../public/weather/fill/svg/sun-hot.svg);
 }
 
 .mist{
   background-image: url(../public/weather/fill/svg/mist.svg);
+}
+
+.fog{
+  background-image: url(../public/weather/fill/svg/fog.svg);
+}
+
+.snow{
+  background-image: url(../public/weather/fill/svg/snow.svg);
+}
+
+.heavy-snow{
+  background-image: url(../public/weather/fill/svg/extreme-snow.svg);
+}
+
+.sleet{
+  background-image: url(../public/weather/fill/svg/sleet.svg);
+}
+
+.heavy-sleet{
+  background-image: url(../public/weather/fill/svg/extreme-sleet.svg);
+}
+
+.drizzle{
+  background-image: url(../public/weather/fill/svg/drizzle.svg);
+}
+
+.heavy-drizzle{
+  background-image: url(../public/weather/fill/svg/extreme-drizzle.svg);
+}
+
+.light-rain{
+  background-image: url(../public/weather/fill/svg/raindrops.svg);
+}
+
+.rain{
+  background-image: url(../public/weather/fill/svg/rain.svg);
+}
+
+.heavy-rain{
+  background-image: url(../public/weather/fill/svg/extreme-rain.svg);
+}
+
+.partly-cloudy{
+  background-image: url(../public/weather/fill/svg/cloudy.svg);
+}
+
+.thunderstorm{
+  background-image: url(../public/weather/fill/svg/thunderstorms-rain.svg);
+}
+
+.thunderstorm-snow{
+  background-image: url(../public/weather/fill/svg/thunderstorms-snow.svg);
+}
+
+.lightning{
+  background-image: url(../public/weather/fill/svg/lightning-bolt.svg);
+}
+
+.hail{
+  background-image: url(../public/weather/fill/svg/hail.svg);
 }
 
 .hourly-wrapper{
@@ -314,6 +383,54 @@ a {
   align-items: center;
   gap:20px;
   white-space:nowrap
+}
+
+/* Favourites */
+.spacer{
+  height:40px;
+}
+
+.fav{
+  padding-block:15px;
+  padding-inline:5px;
+  border-bottom:solid 1px #303030;
+  display:flex;
+  align-items: center;
+  gap:10px;
+  transition:all 0.2s ease-in-out;
+  cursor:pointer;
+}
+
+.fav:nth-last-child(1){
+  border:none;
+}
+
+/* Settings */
+
+.setting{
+  padding-block:15px;
+  padding-inline:5px;
+  border-bottom:solid 1px #303030;
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+  gap:10px;
+  transition:all 0.2s ease-in-out;
+  cursor:pointer;
+}
+
+.setting:nth-last-child(1){
+  border:none;
+}
+
+.setting:hover{
+  opacity:0.7;
+}
+
+.setting-section{
+  display:flex;
+  align-items: center;
+  gap:10px;
 }
 
 /* Header */
