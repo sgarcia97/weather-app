@@ -6,6 +6,14 @@ import Hourly from "../../../public/hourly.svg"
 import Daily from "../../../public/daily-calendar.svg"
 import Mist from "../../../public/weather/fill/svg/mist.svg"
 import Raindrops from "../../../public/weather/fill/svg/raindrops.svg"
+import Cloudy from "../../../public/weather/fill/svg/cloudy.svg"
+import Wind from "../../../public/weather/fill/svg/wind.svg"
+import UV from "../../../public/weather/fill/svg/uv-index.svg"
+import Visibility from "../../../public/weather/fill/svg/fog.svg"
+import Rain from "../../../public/weather/fill/svg/raindrops.svg"
+import Humidity from "../../../public/weather/fill/svg/humidity.svg"
+import Temperature from "../../../public/weather/fill/svg/thermometer.svg"
+import Pressure from "../../../public/weather/fill/svg/pressure-low.svg"
 import Sunrise from "../../../public/weather/fill/svg/sunrise.svg"
 import Sunset from "../../../public/weather/fill/svg/sunset.svg"
 import Moonrise from "../../../public/weather/fill/svg/moonrise.svg"
@@ -140,14 +148,14 @@ if(!data){ return <div className="loader"><Image src={Mist} alt="" width={50} he
            </div>
           </div>
         <div className="section1">
-          <Item title="Precipitation" unit="mm" val={data.current.precip_mm}/>
+        <Item title="Precipitation" unit="mm" val={data.current.precip_mm} img={Rain}/>
 
-          <Item title="Wind Speed" val={data.current.gsut_kph} unit="km/h"/>
-          <Item title="Humidity" val={data.current.humidity} unit="%"/>
-          <Item title="Pressure" val={data.current.pressure_mb} unit="hPa"/>
-          <Item title="Cloud Cover" val={data.current.cloud} unit="%"/>
-          <Item title="UV Index" val={data.current.uv}/>
-          <Item title="Visibility" val={data.current.vis_km} unit="km"/>
+<Item title="Wind Speed" val={data.current.gsut_kph} unit="km/h" img={Wind}/>
+<Item title="Humidity" val={data.current.humidity} unit="%" img={Humidity}/>
+<Item title="Pressure" val={data.current.pressure_mb} unit="hPa" img={Pressure}/>
+<Item title="Cloud Cover" val={data.current.cloud} unit="%" img={Cloudy}/>
+<Item title="UV Index" img={UV} val={data.current.uv}/>
+<Item title="Visibility" val={data.current.vis_km} unit="km" img={Visibility}/>
         </div>
         </div>
       </PageTemplate>

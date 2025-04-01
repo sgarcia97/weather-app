@@ -28,7 +28,7 @@ const Landing = ({title}) => {
 
     return (
         <div className="landing">
-            <div className="landing-title">{title}</div>
+            <div className="landing-title">{title.replace(/<[^>]*>?/gm, '')}</div>
             <input type="search" onChange={(e)=>searchWeatherData(e.target.value)} placeholder="Search for weather in your area"/>
             <div className="search-results">{data.map((res,i)=>{
                 return <div className="search-item" key={i}><Link href={`/details/${res.name}`}><Image alt="" src={location} width={20} height={20}/>{res.name}, {res.region}, {res.country}</Link></div>

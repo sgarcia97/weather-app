@@ -37,39 +37,39 @@ export const weatherIcons = [
     },
     {
         code:1087,
-        icon: "partly-cloudy-day"
+        icon: "lightning"
     },
     {
         code:1114,
-        icon:"cloudy"
+        icon:"heavy-snow"
     },
     {
         code:1117,
-        icon:"overcast"
+        icon:"heavy-snow"
     },
     {
         code:1135,
-        icon:"overcast"
+        icon:"fog"
     },
     {
         code:1147,
-        icon: "sun"
+        icon: "fog"
     },
     {
         code:1150,
-        icon: "partly-cloudy"
+        icon: "drizzle"
     },
     {
         code:1153,
-        icon:"cloudy"
+        icon:"drizzle"
     },
     {
         code:1168,
-        icon:"overcast"
+        icon:"drizzle"
     },
     {
         code:1171,
-        icon: "mist"
+        icon: "heavy-drizzle"
     },
     {
         code:1180,
@@ -77,27 +77,27 @@ export const weatherIcons = [
     },
     {
         code:1183,
-        icon:"cloudy"
+        icon:"light-rain"
     },
     {
         code:1186,
-        icon:"overcast"
+        icon:"rain"
     },
     {
         code:1189,
-        icon: "sun-hot"
+        icon: "rain"
     },
     {
         code:1192,
-        icon: "partly-cloudy-day.svg"
+        icon: "heavy-rain"
     },
     {
         code:1195,
-        icon:"cloudy.svg"
+        icon:"heavy-rain"
     },
     {
         code:1198,
-        icon:"overcast.svg"
+        icon:"light-rain"
     },
     {
         code:1201,
@@ -105,51 +105,51 @@ export const weatherIcons = [
     },
     {
         code:1204,
-        icon: "sun"
+        icon: "sleet"
     },
     {
         code:1207,
-        icon: "partly-cloudy"
+        icon: "sleet"
     },
     {
         code:1210,
-        icon:"cloudy"
+        icon:"snow"
     },
     {
         code:1213,
-        icon:"overcast"
+        icon:"snow"
     },
     {
         code:1216,
-        icon: "mist"
+        icon: "snow"
     },
     {
         code:1219,
-        icon: "partly-cloudy"
+        icon: "snow"
     },
     {
         code:1222,
-        icon:"cloudy"
+        icon:"heavy-snow"
     },
     {
         code:1225,
-        icon:"overcast"
+        icon:"heavy-snow"
     },
     {
         code:1237,
-        icon: "sun-hot"
+        icon: "hail"
     },
     {
         code:1240,
-        icon: "partly-cloudy-day"
+        icon: "light-rain"
     },
     {
         code:1243,
-        icon:"cloudy"
+        icon:"rain"
     },
     {
         code:1246,
-        icon:"overcast"
+        icon:"heavy-rain"
     },
     {
         code:1249,
@@ -177,18 +177,18 @@ export const weatherIcons = [
     },
     {
         code:1273,
-        icon: "partly-cloudy"
+        icon: "thunderstorm"
     },
     {
         code:1276,
-        icon:"cloudy"
+        icon:"thunderstorm"
     },
     {
         code:1279,
-        icon:"overcast"
+        icon:"thunderstorm-snow"
     },
     {
         code:1282,
-        icon: "sun-hot"
+        icon: "thunderstorm-snow"
     }
 ]

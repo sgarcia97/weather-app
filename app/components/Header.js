@@ -5,10 +5,10 @@ import Home from "../../public/house-blank.svg"
 import Setting from "../../public/customize.svg"
 import Heart from "../../public/heart.svg"
 import Image from "next/image"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 
 const Header = () => {
-
+    const router = useRouter()
     return(
         <header>
             <nav>
@@ -18,7 +18,7 @@ const Header = () => {
                     <Link href="/favourites"><Image className="nav-link" alt ="" src={Heart} width={20}/></Link>
                     <Link href="/settings"><Image className="nav-link" alt ="" src={Setting} width={20}/></Link>
                 </div>
-                <button className="button-small" >Login</button>
+                <button className="button-small" onClick={()=>{router.push('/login')}}>Login</button>
             </nav>
         </header>
     )
