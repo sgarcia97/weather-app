@@ -10,6 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "dt-format": "^1.0.8",
     "next": "15.2.4",
     "openmeteo": "^1.2.0",
     "react": "^19.0.0",

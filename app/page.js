@@ -45,13 +45,14 @@ console.log(data)
  let icon = weatherIcons.find((value)=>{
   return value.code === data.current.condition.code
 })
+
   return (
 
     
     <>
       <PageTemplate>
         <Landing title="Welcome to ClimApp"/>
-        <div className="section-title"><Image alt="weather" width={20} height={20} src={location}/>{data.location.name}, {data.location.country} </div>
+        <div className="section-title"><Image alt="weather" width={20} height={20} src={location}/>{data.location.name}, {data.location.country} | Last updated {data.current.last_updated}</div>
         <div className="section">
           <div className="section2">
             <div className="section-title-small"><Image src={temp} width={20} height={20} alt=""/>Today&apos;s Temperature</div>
@@ -95,7 +96,8 @@ console.log(data)
               {
                 data.forecast.forecastday.map((day,i)=>{
                   let n = new Date().getUTCDate()
-                  let d = new Date(day.date).getUTCDate()
+                  const pattern = 'EEE dd'
+                  let d = new Date(day.date).getUTCDate({weekday:'short', day:'numeric'})
                   let fday = d
                   if(n == d){
                     fday = "Today"
@@ -145,7 +147,7 @@ console.log(data)
         <div className="section1">
           <Item title="Precipitation" unit="mm" val={data.current.precip_mm} img={Rain}/>
 
-          <Item title="Wind Speed" val={data.current.gsut_kph} unit="km/h" img={Wind}/>
+          <Item title="Wind Speed" val={data.current.wind_kph} unit="km/h" img={Wind}/>
           <Item title="Humidity" val={data.current.humidity} unit="%" img={Humidity}/>
           <Item title="Pressure" val={data.current.pressure_mb} unit="hPa" img={Pressure}/>
           <Item title="Cloud Cover" val={data.current.cloud} unit="%" img={Cloudy}/>
