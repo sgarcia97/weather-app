@@ -9,7 +9,7 @@ const Page = () => {
   const router = useRouter()
   return (
     <>
-      <PageTemplate title="Your Settings">
+      <PageTemplate title="User Settings">
         <Spacer/>
         <Setting onclick={()=>router.push('/favourites')} name="Your saved locations" img={Img}/>
         <Setting name="Logout" img={Img}/>
