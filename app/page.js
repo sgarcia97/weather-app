@@ -6,7 +6,6 @@ import igm from "../public/globe.svg"
 import temp from "../public/svg/060-temperature.svg"
 import Hourly from "../public/hourly.svg"
 import Daily from "../public/daily-calendar.svg"
-import Raindrops from "../public/weather/fill/svg/raindrops.svg"
 import Cloudy from "../public/weather/fill/svg/cloudy.svg"
 import Wind from "../public/weather/fill/svg/wind.svg"
 import UV from "../public/weather/fill/svg/uv-index.svg"
@@ -24,7 +23,7 @@ import Pressure from "../public/weather/fill/svg/pressure-low.svg"
 import fore from "../public/svg/021-summer.svg"
 import location from "../public/location.svg"
 import Landing from "./components/Landing"
-import Item from "./components/Item"
+import {Item, Hour, Day} from "./components/Item"
 import PageTemplate from "./components/PageTemplate"
 import { weatherIcons } from "./api/weathericons"
 import { fData, forecastdat, currentdat } from "./api/weather"
@@ -72,24 +71,20 @@ console.log(data)
             </div>
             <div className="section-title-small"><Image src={Hourly} width={20} height={20} alt=""/>Hourly Forecast </div>
             <div className="hourly-wrapper">
-              <div className="hour">
-            <div>Now</div>
-                  <div className={`forecast-img ${icon.icon}`}></div>
-                  <div>{Math.round(data.current.temp_c)}&deg; | <span style={{color:"#999999"}}>{Math.round(data.current.windchill_c)}&deg;</span></div></div>
+              <Hour date="Now" icon={icon.icon} temp={data.current.temp_c} wind={data.current.windchill_c}/>
             {
               data.forecast.forecastday.map((day,i)=>(
-              day.hour.map((val,i)=>{
-               const dd = moment().format('YYYY-MM-DD hh:mm')
-               let tt = moment(val.time).format('hh:mm a')
-                if(val.time >= dd){
+               day.hour.map((val,i)=>{
+               const cdate = moment().format('YYYY-MM-DD HH:mm')
+               const wdate = moment(val.time).format('YYYY-MM-DD HH:mm')
+               const whour = moment(val.time).format('h A')
+               if(wdate >= cdate){
+            
                 const ico = weatherIcons.find((vall)=>{
                   return vall.code === val.condition.code
                 })
-                return <div className="hour" key={i}>
-                  <div>{tt}</div>
-                  <div className={`forecast-img ${ico.icon}`}></div>
-                  <div>{Math.round(val.temp_c)}&deg; | <span style={{color:"#999999"}}>{Math.round(val.windchill_c)}&deg;</span></div></div>
-                }
+                return <Hour key={i} date={whour} icon={ico.icon} temp={val.temp_c} wind={val.windchill_c}/>
+              }
               })
               ))
             }
@@ -98,25 +93,19 @@ console.log(data)
             <div className="forecast-wrapper">
               {
                 data.forecast.forecastday.map((day,i)=>{
-                  let n = format(new Date(),'eee')
-                  
                   let dd = moment(day.date).format('ddd Do')
-                  
-                  
                   const ic = weatherIcons.find((val)=>{
                     return val.code === day.day.condition.code
                   })
-                
-                  return <div key={i} className="forecast">
-                    <div>{dd}</div>
-                    <div>{day.day.condition.code}</div>
-                    <div className={`forecast-img-medium ${ic.icon}`}></div>
-                    <div className="h-align"><Image alt="" width={20} height={20} src={Raindrops}/>{day.day.daily_chance_of_rain}%</div>
-                    <div>{day.day.totalprecip_mm} mm</div>
-                    <div className="forecast-temp">
-                      <span>{Math.round(day.day.maxtemp_c)}</span>
-                      <span>{Math.round(day.day.mintemp_c)}</span></div>
-                  </div>
+                  const wdata = {
+                    date:dd,
+                    icon:ic.icon,
+                    chance:day.day.daily_chance_of_rain,
+                    amt:day.day.totalprecip_mm,
+                    max:day.day.maxtemp_c,
+                    min:day.day.mintemp_c
+                  }
+                  return <Day key={i} wdata={wdata} />
                 })
               }
             </div>
@@ -144,16 +133,15 @@ console.log(data)
               </table>
            </div>
           </div>
-        <div className="section1">
-          <Item title="Precipitation" unit="mm" val={data.current.precip_mm} img={Rain}/>
-
-          <Item title="Wind Speed" val={data.current.wind_kph} unit="km/h" img={Wind}/>
-          <Item title="Humidity" val={data.current.humidity} unit="%" img={Humidity}/>
-          <Item title="Pressure" val={data.current.pressure_mb} unit="hPa" img={Pressure}/>
-          <Item title="Cloud Cover" val={data.current.cloud} unit="%" img={Cloudy}/>
-          <Item title="UV Index" img={UV} val={data.current.uv}/>
-          <Item title="Visibility" val={data.current.vis_km} unit="km" img={Visibility}/>
-        </div>
+          <div className="section1">
+            <Item title="Precipitation" unit="mm" val={data.current.precip_mm} img={Rain}/>
+            <Item title="Wind Speed" val={data.current.wind_kph} unit="km/h" img={Wind}/>
+            <Item title="Humidity" val={data.current.humidity} unit="%" img={Humidity}/>
+            <Item title="Pressure" val={data.current.pressure_mb} unit="hPa" img={Pressure}/>
+            <Item title="Cloud Cover" val={data.current.cloud} unit="%" img={Cloudy}/>
+            <Item title="UV Index" img={UV} val={data.current.uv}/>
+            <Item title="Visibility" val={data.current.vis_km} unit="km" img={Visibility}/>
+          </div>
         </div>
       </PageTemplate>
     </>
