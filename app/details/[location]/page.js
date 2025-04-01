@@ -1,4 +1,5 @@
 "use client"
+import moment from 'moment';
 import Image from "next/image"
 import temp from "../../../public/svg/060-temperature.svg"
 import fore from "../../../public/svg/021-summer.svg"
@@ -51,44 +52,50 @@ const Page = () => {
     },[params.location])
 console.log(data)
 if(!data){ return <div className="loader"><Image src={Mist} alt="" width={50} height={50} />Loading weather...</div>}
+let icon = weatherIcons.find((value)=>{
+  return value.code === data.current.condition.code
+})
   return (
 
     <>
-      <PageTemplate>
+     <PageTemplate>
         <Landing title={params.location}/>
-        <div className="section-title"><Image alt="weather" width={30} height={30} src={location}/>{data.location.name}, {data.location.country} </div>
+        <div className="section-title"><Image alt="weather" width={20} height={20} src={location}/>{data.location.name}, {data.location.country} | Last updated {moment(data.current.last_updated).format('ddd MMM D - h:mm a')}</div>
         <div className="section">
           <div className="section2">
-            <div className="section-title-small"><Image src={temp} width={30} height={30} alt=""/>Today&apos;s Temperature</div>
-           <div className={`forecast-img-medium`}></div>
-            <div className="highlight-val"><span>{Math.round(data.current.temp_c)}&deg;</span>
+            <div className="section-title-small"><Image src={temp} width={20} height={20} alt=""/>Today&apos;s Temperature</div>
+           
+            <div className="highlight-val">
+            <div className={`forecast-img-large ${icon.icon}`}></div>
+            <div className="highlight-info">
+              <span>{Math.round(data.current.temp_c)}&deg;</span>
             <div className="highlight-desc">
               <div>Feels like {Math.round(data.current.feelslike_c)}&deg;</div>
             <div>Wind Chill {Math.round(data.current.windchill_c)}&deg;</div>
             <div className="highlight-title">{data.current.condition.text}</div>
             </div>
             </div>
+            </div>
             <div className="section-title-small"><Image src={Hourly} width={20} height={20} alt=""/>Hourly Forecast </div>
             <div className="hourly-wrapper">
+              <div className="hour">
+            <div>Now</div>
+                  <div className={`forecast-img ${icon.icon}`}></div>
+                  <div>{Math.round(data.current.temp_c)}&deg; | <span style={{color:"#999999"}}>{Math.round(data.current.windchill_c)}&deg;</span></div></div>
             {
               data.forecast.forecastday.map((day,i)=>(
               day.hour.map((val,i)=>{
-                let h = new Date().getHours()
-                //let dd = new Date().getDate()
-                //if(i >= h){
-                let hf = i
-                if(i == h){
-                  hf = "Now"
-                }
-
+               const dd = moment().format('YYYY-MM-DD hh:mm')
+               let tt = moment(val.time).format('hh:mm a')
+                if(val.time >= dd){
                 const ico = weatherIcons.find((vall)=>{
                   return vall.code === val.condition.code
                 })
                 return <div className="hour" key={i}>
-                  <div>{hf}</div>
-                  <div className={`forecast-img `}></div>
+                  <div>{tt}</div>
+                  <div className={`forecast-img ${ico.icon}`}></div>
                   <div>{Math.round(val.temp_c)}&deg; | <span style={{color:"#999999"}}>{Math.round(val.windchill_c)}&deg;</span></div></div>
-              //}
+                }
               })
               ))
             }
@@ -97,25 +104,17 @@ if(!data){ return <div className="loader"><Image src={Mist} alt="" width={50} he
             <div className="forecast-wrapper">
               {
                 data.forecast.forecastday.map((day,i)=>{
-                  let n = new Date().getUTCDate()
-                  let d = new Date(day.date).getUTCDate()
-                  let fday = d
-                  if(n == d){
-                    fday = "Today"
-                  }
-                  
+                  let dd = moment(day.date).format('ddd Do')
                   const ic = weatherIcons.find((val)=>{
                     return val.code === day.day.condition.code
                   })
-
-                  console.log(ic)
                 
                   return <div key={i} className="forecast">
-                    <div>{d}</div>
+                    <div>{dd}</div>
                     <div>{day.day.condition.code}</div>
                     <div className={`forecast-img-medium ${ic.icon}`}></div>
                     <div className="h-align"><Image alt="" width={20} height={20} src={Raindrops}/>{day.day.daily_chance_of_rain}%</div>
-                    <div>{day.day.totalprecip_mm}</div>
+                    <div>{day.day.totalprecip_mm} mm</div>
                     <div className="forecast-temp">
                       <span>{Math.round(day.day.maxtemp_c)}</span>
                       <span>{Math.round(day.day.mintemp_c)}</span></div>
@@ -125,37 +124,37 @@ if(!data){ return <div className="loader"><Image src={Mist} alt="" width={50} he
             </div>
             <div className="section-title-small"><Image src={Moon} width={20} height={20} alt=""/>Astronomy Data</div>
             <div>
-             <table>
-                             <tbody>
-                             <tr>
-                               <td><div className="h-align"><Image src={Sunrise} alt="" width={25} height={25}/>Sunrise</div></td>
-                               <td></td>
-                             </tr>
-                             <tr>
-                               <td><div className="h-align"><Image src={Sunset} alt="" width={25} height={25}/>Sunset</div></td>
-                               <td></td>
-                             </tr>
-                             <tr>
-                               <td><div className="h-align"><Image src={Moonrise} alt="" width={25} height={25}/>Moonrise</div></td>
-                               <td></td>
-                             </tr>
-                             <tr>
-                               <td><div className="h-align"><Image src={Moonset} alt="" width={25} height={25}/>Moonset</div></td>
-                               <td></td>
-                             </tr>
-                             </tbody>
-                           </table>
+              <table>
+                <tbody>
+                <tr>
+                  <td><div className="h-align"><Image src={Sunrise} alt="" width={25} height={25}/>Sunrise</div></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><div className="h-align"><Image src={Sunset} alt="" width={25} height={25}/>Sunset</div></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><div className="h-align"><Image src={Moonrise} alt="" width={25} height={25}/>Moonrise</div></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><div className="h-align"><Image src={Moonset} alt="" width={25} height={25}/>Moonset</div></td>
+                  <td></td>
+                </tr>
+                </tbody>
+              </table>
            </div>
           </div>
         <div className="section1">
-        <Item title="Precipitation" unit="mm" val={data.current.precip_mm} img={Rain}/>
+          <Item title="Precipitation" unit="mm" val={data.current.precip_mm} img={Rain}/>
 
-<Item title="Wind Speed" val={data.current.gsut_kph} unit="km/h" img={Wind}/>
-<Item title="Humidity" val={data.current.humidity} unit="%" img={Humidity}/>
-<Item title="Pressure" val={data.current.pressure_mb} unit="hPa" img={Pressure}/>
-<Item title="Cloud Cover" val={data.current.cloud} unit="%" img={Cloudy}/>
-<Item title="UV Index" img={UV} val={data.current.uv}/>
-<Item title="Visibility" val={data.current.vis_km} unit="km" img={Visibility}/>
+          <Item title="Wind Speed" val={data.current.wind_kph} unit="km/h" img={Wind}/>
+          <Item title="Humidity" val={data.current.humidity} unit="%" img={Humidity}/>
+          <Item title="Pressure" val={data.current.pressure_mb} unit="hPa" img={Pressure}/>
+          <Item title="Cloud Cover" val={data.current.cloud} unit="%" img={Cloudy}/>
+          <Item title="UV Index" img={UV} val={data.current.uv}/>
+          <Item title="Visibility" val={data.current.vis_km} unit="km" img={Visibility}/>
         </div>
         </div>
       </PageTemplate>

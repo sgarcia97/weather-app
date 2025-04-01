@@ -1,4 +1,6 @@
 "use client"
+import { format } from 'date-fns'
+import moment from 'moment';
 import Image from "next/image";
 import igm from "../public/globe.svg"
 import temp from "../public/svg/060-temperature.svg"
@@ -52,13 +54,14 @@ console.log(data)
     <>
       <PageTemplate>
         <Landing title="Welcome to ClimApp"/>
-        <div className="section-title"><Image alt="weather" width={20} height={20} src={location}/>{data.location.name}, {data.location.country} | Last updated {data.current.last_updated}</div>
+        <div className="section-title"><Image alt="weather" width={20} height={20} src={location}/>{data.location.name}, {data.location.country} | Last updated {moment(data.current.last_updated).format('ddd MMM D - h:mm a')}</div>
         <div className="section">
           <div className="section2">
             <div className="section-title-small"><Image src={temp} width={20} height={20} alt=""/>Today&apos;s Temperature</div>
            
             <div className="highlight-val">
             <div className={`forecast-img-large ${icon.icon}`}></div>
+            <div className="highlight-info">
               <span>{Math.round(data.current.temp_c)}&deg;</span>
             <div className="highlight-desc">
               <div>Feels like {Math.round(data.current.feelslike_c)}&deg;</div>
@@ -66,27 +69,27 @@ console.log(data)
             <div className="highlight-title">{data.current.condition.text}</div>
             </div>
             </div>
+            </div>
             <div className="section-title-small"><Image src={Hourly} width={20} height={20} alt=""/>Hourly Forecast </div>
             <div className="hourly-wrapper">
+              <div className="hour">
+            <div>Now</div>
+                  <div className={`forecast-img ${icon.icon}`}></div>
+                  <div>{Math.round(data.current.temp_c)}&deg; | <span style={{color:"#999999"}}>{Math.round(data.current.windchill_c)}&deg;</span></div></div>
             {
               data.forecast.forecastday.map((day,i)=>(
               day.hour.map((val,i)=>{
-                let h = new Date().getHours()
-                //let dd = new Date().getDate()
-                //if(i >= h){
-                let hf = i
-                if(i == h){
-                  hf = "Now"
-                }
-
+               const dd = moment().format('YYYY-MM-DD hh:mm')
+               let tt = moment(val.time).format('hh:mm a')
+                if(val.time >= dd){
                 const ico = weatherIcons.find((vall)=>{
                   return vall.code === val.condition.code
                 })
                 return <div className="hour" key={i}>
-                  <div>{hf}</div>
+                  <div>{tt}</div>
                   <div className={`forecast-img ${ico.icon}`}></div>
                   <div>{Math.round(val.temp_c)}&deg; | <span style={{color:"#999999"}}>{Math.round(val.windchill_c)}&deg;</span></div></div>
-              //}
+                }
               })
               ))
             }
@@ -95,20 +98,17 @@ console.log(data)
             <div className="forecast-wrapper">
               {
                 data.forecast.forecastday.map((day,i)=>{
-                  let n = new Date().getUTCDate()
-                  const pattern = 'EEE dd'
-                  let d = new Date(day.date).getUTCDate({weekday:'short', day:'numeric'})
-                  let fday = d
-                  if(n == d){
-                    fday = "Today"
-                  }
+                  let n = format(new Date(),'eee')
+                  
+                  let dd = moment(day.date).format('ddd Do')
+                  
                   
                   const ic = weatherIcons.find((val)=>{
                     return val.code === day.day.condition.code
                   })
                 
                   return <div key={i} className="forecast">
-                    <div>{d}</div>
+                    <div>{dd}</div>
                     <div>{day.day.condition.code}</div>
                     <div className={`forecast-img-medium ${ic.icon}`}></div>
                     <div className="h-align"><Image alt="" width={20} height={20} src={Raindrops}/>{day.day.daily_chance_of_rain}%</div>

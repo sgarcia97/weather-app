@@ -2,7 +2,7 @@
 import next from "../../public/next.svg"
 import Link from "next/link"
 import Home from "../../public/house-blank.svg"
-import Setting from "../../public/customize.svg"
+import Setting from "../../public/user-gear.svg"
 import Heart from "../../public/heart.svg"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
