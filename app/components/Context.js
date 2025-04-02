@@ -1,3 +1,21 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 
-export const CompanyContext = createContext("")
+const AuthContext = createContext("")
+
+const AuthComp = () => {
+
+    return(
+        <AuthContext>
+            
+        </AuthContext>
+    )
+}
+
+
+
+export const Acontext = () => {
+    return useContext(AuthContext)
+}
+
+
+
