@@ -59,7 +59,7 @@ let icon = weatherIcons.find((value)=>{
 
     <>
      <PageTemplate>
-        <Landing title="Welcome to ClimApp"/>
+        <Landing title={params.location}/>
         <div className="section-title"><Image alt="weather" width={20} height={20} src={location}/>{data.location.name}, {data.location.country} | Last updated {moment(data.current.last_updated).format('ddd MMM D - h:mm a')}</div>
         <div className="section">
           <div className="section2">
@@ -82,7 +82,7 @@ let icon = weatherIcons.find((value)=>{
             {
               data.forecast.forecastday.map((day,i)=>(
                day.hour.map((val,i)=>{
-               const cdate = moment().format('YYYY-MM-DD HH:mm')
+               const cdate = moment(data.current.last_updated).format('YYYY-MM-DD HH:mm')
                const wdate = moment(val.time).format('YYYY-MM-DD HH:mm')
                const whour = moment(val.time).format('h A')
                if(wdate >= cdate){

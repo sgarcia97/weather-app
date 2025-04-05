@@ -75,7 +75,7 @@ console.log(data)
             {
               data.forecast.forecastday.map((day,i)=>(
                day.hour.map((val,i)=>{
-               const cdate = moment().format('YYYY-MM-DD HH:mm')
+               const cdate = moment(data.current.last_updated).format('YYYY-MM-DD HH:mm')
                const wdate = moment(val.time).format('YYYY-MM-DD HH:mm')
                const whour = moment(val.time).format('h A')
                if(wdate >= cdate){
