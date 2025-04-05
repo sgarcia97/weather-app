@@ -31,19 +31,10 @@ const Login = () => {
   const handleLogin = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // go to root or previous page
-        //const redirectTo =
-        //window.localStorage.getItem("redirectAfterLogin") || "/";
-        //router.push(redirectTo);
         router.push("/");
       }
     });
   };
-
-  //   useEffect(() => {
-  //     const currentUrl = window.location.pathname;
-  //     window.localStorage.setItem("redirectAfterLogin", currentUrl);
-  //   }, []);
 
   return (
     <PageTemplate>
