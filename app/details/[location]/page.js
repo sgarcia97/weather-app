@@ -59,7 +59,7 @@ let icon = weatherIcons.find((value)=>{
 
     <>
      <PageTemplate>
-        <Landing title={params.location}/>
+        <Landing title={decodeURIComponent(params.location)}/>
         <div className="section-title"><Image alt="weather" width={20} height={20} src={location}/>{data.location.name}, {data.location.country} | Last updated {moment(data.current.last_updated).format('ddd MMM D - h:mm a')}</div>
         <div className="section">
           <div className="section2">
