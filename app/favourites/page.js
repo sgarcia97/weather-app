@@ -5,6 +5,8 @@ import Spacer from "../components/Spacer"
 const Page = () => {
 
   return (
+    <></>
+    /*
       <PageTemplate title="Your Favourites">
       <Spacer/>
       <Favourite name="Calgary" country="Canada"/>
@@ -12,6 +14,7 @@ const Page = () => {
       <Favourite name="Port-of-Spain" country="Trinidad and Tobago"/>
       <Favourite name="Manila" country="Phillipines"/>
       </PageTemplate>
+      */
   )
 }
 
