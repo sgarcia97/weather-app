@@ -13,7 +13,6 @@
     "date-fns": "^4.1.0",
     "dt-format": "^1.0.8",
     "firebase": "^11.6.0",
-    "firebaseui": "^6.1.0",
     "moment": "^2.30.1",
     "next": "15.2.4",
     "openmeteo": "^1.2.0",

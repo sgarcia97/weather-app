@@ -29,7 +29,6 @@ const Header = () => {
         alert('You are logged out')
         redirect('/')
     }
-    console.log(usr)
     
     return(
         <header>
