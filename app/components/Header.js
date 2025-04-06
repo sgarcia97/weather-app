@@ -18,10 +18,17 @@ const Header = () => {
     router.push("/");
   };
 
+  // todo: change to display name
+  const welcome = user ? (
+    <span>welcome {user.uid}</span>
+  ) : (
+    <span>You are not logged in.</span>
+  );
+
   return (
     <header>
       <nav>
-        <div className="logo">ClimApp {user && user.uid}</div>
+        <div className="logo">ClimApp | {welcome}</div>
         <div className="links">
           <Link href="/">
             <Image className="nav-link" alt="Home" src={Home} width={20} />

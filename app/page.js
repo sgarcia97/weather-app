@@ -51,21 +51,10 @@ const Page = () => {
     return value.code === data.current.condition.code;
   });
 
-  const welcome = user ? (
-    <div>
-      <span>welcome {user.display_name}</span>
-    </div>
-  ) : (
-    <div>
-      <span>You are not logged in.</span>
-    </div>
-  );
-
   return (
     <>
       <PageTemplate>
         <Landing title="Welcome to ClimApp" />
-        {welcome}
         <div className="section-title">
           <Image alt="weather" width={20} height={20} src={location} />
           {data.location.name}, {data.location.country} | Last updated{" "}
