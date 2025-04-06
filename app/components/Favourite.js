@@ -13,18 +13,14 @@ const Favourite = ({ id, name, country, onRemove, onSelect }) => {
   };
 
   return (
-    <div className="fav flex flex-row gap-2 w-full" onClick={handleSelect}>
+    <div className="fav" onClick={handleSelect}>
+      <div className="fav-section">
       <Image alt="" src={Location} width={20} height={20} />
       <div className="flex-grow">
         {name}, {country}
       </div>
-      <button
-        onClick={handleRemove}
-        className="ml-auto"
-        aria-label="Remove favorite"
-      >
-        <Trash2 color="red" size={20} />
-      </button>
+      </div>
+      <div className="icon-wrapper" onClick={handleRemove}><Trash2 color="red" size={20}/></div>
     </div>
   );
 };

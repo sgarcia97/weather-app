@@ -1,6 +1,6 @@
 "use client";
 
-import { getFavorites } from "../services/dataServices";
+import { getFavorites, deleteFavorite } from "../services/dataServices";
 import PageTemplate from "../components/PageTemplate";
 import Favourite from "../components/Favourite";
 import Spacer from "../components/Spacer";

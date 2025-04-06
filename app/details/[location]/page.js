@@ -27,7 +27,7 @@ import { weatherIcons } from "../../api/weathericons";
 import Landing from "../../components/Landing";
 import { Item, Day, Hour } from "../../components/Item";
 import PageTemplate from "../../components/PageTemplate";
-import { fData, forecastdat, currentdat } from "../../api/weather";
+import { forecastData, astronomyData } from "../../api/weather";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useAuth } from "@/app/lib/authContext";
@@ -40,33 +40,15 @@ import { Heart } from "react-feather";
 
 const Page = () => {
   const [data, setData] = useState(null);
+  const [adata, setAData] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
   const params = useParams();
   const { user } = useAuth();
 
-  useEffect(() => {
-    const forecastData = async () => {
-      const url =
-        "https://api.weatherapi.com/v1/forecast.json?q=" +
-        params.location +
-        "&days=3&aqi=yes&alerts=yes&key=" +
-        process.env.NEXT_PUBLIC_ANTI;
-      const options = {
-        method: "GET",
-      };
-
-      try {
-        const response = await fetch(url, options);
-        const result = await response.json();
-        setData(result);
-      } catch (error) {
-        return error.message;
-      }
-    };
-    forecastData();
-  }, [params.location]);
   //console.log(data);
   useEffect(() => {
+    forecastData(params.location).then(d=>setData(d))
+    astronomyData(params.location).then(d=>setAData(d))
     const checkIfFavorite = async () => {
       // wait for user
       if (!user) return;
@@ -84,7 +66,7 @@ const Page = () => {
     if (data && user) {
       checkIfFavorite();
     }
-  }, [data, user]);
+  }, [data, user, params]);
 
   const toggleFavorite = async () => {
     try {
@@ -124,13 +106,14 @@ const Page = () => {
       <PageTemplate>
         <Landing title={data.location.name} />
         <div className="section-title">
+          <div className="section-title-sect">
           <Image alt="weather" width={20} height={20} src={location} />
           {data.location.name}, {data.location.country} | Last updated{" "}
-          {moment(data.current.last_updated).format("ddd MMM D - h:mm a")}
+          {moment(data.current.last_updated).format("ddd MMM D - h:mm a")}</div>
           {isFavorite ? (
-            <Heart size={20} color="red" fill="red" />
+            <div className="icon-wrapper noselect"><Heart size={20} color="red" fill="red"/></div>
           ) : (
-            <Heart size={20} color="red" />
+            <div className="icon-wrapper" onClick={toggleFavorite}><Heart size={20} color="red"/></div>
           )}
         </div>
         <div className="section">
