@@ -1,151 +1,235 @@
-"use client"
-import { format } from 'date-fns'
-import moment from 'moment';
+"use client";
+import { format } from "date-fns";
+import moment from "moment";
 import Image from "next/image";
-import igm from "../public/globe.svg"
-import temp from "../public/svg/060-temperature.svg"
-import Hourly from "../public/hourly.svg"
-import Daily from "../public/daily-calendar.svg"
-import Cloudy from "../public/weather/fill/svg/cloudy.svg"
-import Wind from "../public/weather/fill/svg/wind.svg"
-import UV from "../public/weather/fill/svg/uv-index.svg"
-import Visibility from "../public/weather/fill/svg/fog.svg"
-import Rain from "../public/weather/fill/svg/raindrops.svg"
-import Mist from "../public/weather/fill/svg/mist.svg"
-import Moon from "../public/moon-stars.svg"
-import Sunrise from "../public/weather/fill/svg/sunrise.svg"
-import Sunset from "../public/weather/fill/svg/sunset.svg"
-import Moonrise from "../public/weather/fill/svg/moonrise.svg"
-import Moonset from "../public/weather/fill/svg/moonset.svg"
-import Humidity from "../public/weather/fill/svg/humidity.svg"
-import Temperature from "../public/weather/fill/svg/thermometer.svg"
-import Pressure from "../public/weather/fill/svg/pressure-low.svg"
-import fore from "../public/svg/021-summer.svg"
-import location from "../public/location.svg"
-import Landing from "./components/Landing"
-import {Item, Hour, Day} from "./components/Item"
-import PageTemplate from "./components/PageTemplate"
-import { weatherIcons } from "./api/weathericons"
-import { fData, forecastdat, currentdat } from "./api/weather"
-import { useState, useEffect } from "react"
+import igm from "../public/globe.svg";
+import temp from "../public/svg/060-temperature.svg";
+import Hourly from "../public/hourly.svg";
+import Daily from "../public/daily-calendar.svg";
+import Cloudy from "../public/weather/fill/svg/cloudy.svg";
+import Wind from "../public/weather/fill/svg/wind.svg";
+import UV from "../public/weather/fill/svg/uv-index.svg";
+import Visibility from "../public/weather/fill/svg/fog.svg";
+import Rain from "../public/weather/fill/svg/raindrops.svg";
+import Mist from "../public/weather/fill/svg/mist.svg";
+import Moon from "../public/moon-stars.svg";
+import Sunrise from "../public/weather/fill/svg/sunrise.svg";
+import Sunset from "../public/weather/fill/svg/sunset.svg";
+import Moonrise from "../public/weather/fill/svg/moonrise.svg";
+import Moonset from "../public/weather/fill/svg/moonset.svg";
+import Humidity from "../public/weather/fill/svg/humidity.svg";
+import Temperature from "../public/weather/fill/svg/thermometer.svg";
+import Pressure from "../public/weather/fill/svg/pressure-low.svg";
+import fore from "../public/svg/021-summer.svg";
+import location from "../public/location.svg";
+import Landing from "./components/Landing";
+import { Item, Hour, Day } from "./components/Item";
+import PageTemplate from "./components/PageTemplate";
+import { weatherIcons } from "./api/weathericons";
+import { fData, forecastdat, currentdat } from "./api/weather";
+import { useState, useEffect } from "react";
+import { useAuth } from "./lib/authContext";
 
 const Page = () => {
-  
-  const [data, setData] = useState(null)
-  const [def, setDef] = useState("Calgary")
+  const [data, setData] = useState(null);
+  const [def, setDef] = useState("Calgary");
+  const { user } = useAuth();
 
-  useEffect(()=>{
-    fData.then((d)=>setData(d))
-  },[])
-console.log(data)
+  useEffect(() => {
+    fData.then((d) => setData(d));
+  }, []);
+  console.log(data);
 
-            
-  
-  
- if(!data) return <div className="loader"><Image src={Mist} alt="" width={50} height={50} />Loading weather...</div>
- let icon = weatherIcons.find((value)=>{
-  return value.code === data.current.condition.code
-})
+  if (!data)
+    return (
+      <div className="loader">
+        <Image src={Mist} alt="" width={50} height={50} />
+        Loading weather...
+      </div>
+    );
+  let icon = weatherIcons.find((value) => {
+    return value.code === data.current.condition.code;
+  });
 
   return (
-
-    
     <>
       <PageTemplate>
-        <Landing title="Welcome to ClimApp"/>
-        <div className="section-title"><Image alt="weather" width={20} height={20} src={location}/>{data.location.name}, {data.location.country} | Last updated {moment(data.current.last_updated).format('ddd MMM D - h:mm a')}</div>
+        <Landing title="Welcome to ClimApp" />
+        <div className="section-title">
+          <Image alt="weather" width={20} height={20} src={location} />
+          {data.location.name}, {data.location.country} | Last updated{" "}
+          {moment(data.current.last_updated).format("ddd MMM D - h:mm a")}
+        </div>
         <div className="section">
           <div className="section2">
-            <div className="section-title-small"><Image src={temp} width={20} height={20} alt=""/>Today&apos;s Temperature</div>
-           
+            <div className="section-title-small">
+              <Image src={temp} width={20} height={20} alt="" />
+              Today&apos;s Temperature
+            </div>
+
             <div className="highlight-val">
-            <div className={`forecast-img-large ${icon.icon}`}></div>
-            <div className="highlight-info">
-              <span>{Math.round(data.current.temp_c)}&deg;</span>
-            <div className="highlight-desc">
-              <div>Feels like {Math.round(data.current.feelslike_c)}&deg;</div>
-            <div>Wind Chill {Math.round(data.current.windchill_c)}&deg;</div>
-            <div className="highlight-title">{data.current.condition.text}</div>
+              <div className={`forecast-img-large ${icon.icon}`}></div>
+              <div className="highlight-info">
+                <span>{Math.round(data.current.temp_c)}&deg;</span>
+                <div className="highlight-desc">
+                  <div>
+                    Feels like {Math.round(data.current.feelslike_c)}&deg;
+                  </div>
+                  <div>
+                    Wind Chill {Math.round(data.current.windchill_c)}&deg;
+                  </div>
+                  <div className="highlight-title">
+                    {data.current.condition.text}
+                  </div>
+                </div>
+              </div>
             </div>
+            <div className="section-title-small">
+              <Image src={Hourly} width={20} height={20} alt="" />
+              Hourly Forecast{" "}
             </div>
-            </div>
-            <div className="section-title-small"><Image src={Hourly} width={20} height={20} alt=""/>Hourly Forecast </div>
             <div className="hourly-wrapper">
-              <Hour date="Now" icon={icon.icon} temp={data.current.temp_c} wind={data.current.windchill_c}/>
-            {
-              data.forecast.forecastday.map((day,i)=>(
-               day.hour.map((val,i)=>{
-               const cdate = moment(data.current.last_updated).format('YYYY-MM-DD HH:mm')
-               const wdate = moment(val.time).format('YYYY-MM-DD HH:mm')
-               const whour = moment(val.time).format('h A')
-               if(wdate >= cdate){
-            
-                const ico = weatherIcons.find((vall)=>{
-                  return vall.code === val.condition.code
-                })
-                return <Hour key={i} date={whour} icon={ico.icon} temp={val.temp_c} wind={val.windchill_c}/>
-              }
-              })
-              ))
-            }
-            </div>
-            <div className="section-title-small"><Image src={Daily} width={20} height={20} alt=""/>Daily Forecast</div>
-            <div className="forecast-wrapper">
-              {
-                data.forecast.forecastday.map((day,i)=>{
-                  let dd = moment(day.date).format('ddd Do')
-                  const ic = weatherIcons.find((val)=>{
-                    return val.code === day.day.condition.code
-                  })
-                  const wdata = {
-                    date:dd,
-                    icon:ic.icon,
-                    chance:day.day.daily_chance_of_rain,
-                    amt:day.day.totalprecip_mm,
-                    max:day.day.maxtemp_c,
-                    min:day.day.mintemp_c
+              <Hour
+                date="Now"
+                icon={icon.icon}
+                temp={data.current.temp_c}
+                wind={data.current.windchill_c}
+              />
+              {data.forecast.forecastday.map((day, i) =>
+                day.hour.map((val, i) => {
+                  const cdate = moment(data.current.last_updated).format(
+                    "YYYY-MM-DD HH:mm"
+                  );
+                  const wdate = moment(val.time).format("YYYY-MM-DD HH:mm");
+                  const whour = moment(val.time).format("h A");
+                  if (wdate >= cdate) {
+                    const ico = weatherIcons.find((vall) => {
+                      return vall.code === val.condition.code;
+                    });
+                    return (
+                      <Hour
+                        key={i}
+                        date={whour}
+                        icon={ico.icon}
+                        temp={val.temp_c}
+                        wind={val.windchill_c}
+                      />
+                    );
                   }
-                  return <Day key={i} wdata={wdata} />
                 })
-              }
+              )}
             </div>
-            <div className="section-title-small"><Image src={Moon} width={20} height={20} alt=""/>Astronomy Data</div>
+            <div className="section-title-small">
+              <Image src={Daily} width={20} height={20} alt="" />
+              Daily Forecast
+            </div>
+            <div className="forecast-wrapper">
+              {data.forecast.forecastday.map((day, i) => {
+                let dd = moment(day.date).format("ddd Do");
+                const ic = weatherIcons.find((val) => {
+                  return val.code === day.day.condition.code;
+                });
+                const wdata = {
+                  date: dd,
+                  icon: ic.icon,
+                  chance: day.day.daily_chance_of_rain,
+                  amt: day.day.totalprecip_mm,
+                  max: day.day.maxtemp_c,
+                  min: day.day.mintemp_c,
+                };
+                return <Day key={i} wdata={wdata} />;
+              })}
+            </div>
+            <div className="section-title-small">
+              <Image src={Moon} width={20} height={20} alt="" />
+              Astronomy Data
+            </div>
             <div>
               <table>
                 <tbody>
-                <tr>
-                  <td><div className="h-align"><Image src={Sunrise} alt="" width={25} height={25}/>Sunrise</div></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td><div className="h-align"><Image src={Sunset} alt="" width={25} height={25}/>Sunset</div></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td><div className="h-align"><Image src={Moonrise} alt="" width={25} height={25}/>Moonrise</div></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td><div className="h-align"><Image src={Moonset} alt="" width={25} height={25}/>Moonset</div></td>
-                  <td></td>
-                </tr>
+                  <tr>
+                    <td>
+                      <div className="h-align">
+                        <Image src={Sunrise} alt="" width={25} height={25} />
+                        Sunrise
+                      </div>
+                    </td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div className="h-align">
+                        <Image src={Sunset} alt="" width={25} height={25} />
+                        Sunset
+                      </div>
+                    </td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div className="h-align">
+                        <Image src={Moonrise} alt="" width={25} height={25} />
+                        Moonrise
+                      </div>
+                    </td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div className="h-align">
+                        <Image src={Moonset} alt="" width={25} height={25} />
+                        Moonset
+                      </div>
+                    </td>
+                    <td></td>
+                  </tr>
                 </tbody>
               </table>
-           </div>
+            </div>
           </div>
           <div className="section1">
-            <Item title="Precipitation" unit="mm" val={data.current.precip_mm} img={Rain}/>
-            <Item title="Wind Speed" val={data.current.wind_kph} unit="km/h" img={Wind}/>
-            <Item title="Humidity" val={data.current.humidity} unit="%" img={Humidity}/>
-            <Item title="Pressure" val={data.current.pressure_mb} unit="hPa" img={Pressure}/>
-            <Item title="Cloud Cover" val={data.current.cloud} unit="%" img={Cloudy}/>
-            <Item title="UV Index" img={UV} val={data.current.uv}/>
-            <Item title="Visibility" val={data.current.vis_km} unit="km" img={Visibility}/>
+            <Item
+              title="Precipitation"
+              unit="mm"
+              val={data.current.precip_mm}
+              img={Rain}
+            />
+            <Item
+              title="Wind Speed"
+              val={data.current.wind_kph}
+              unit="km/h"
+              img={Wind}
+            />
+            <Item
+              title="Humidity"
+              val={data.current.humidity}
+              unit="%"
+              img={Humidity}
+            />
+            <Item
+              title="Pressure"
+              val={data.current.pressure_mb}
+              unit="hPa"
+              img={Pressure}
+            />
+            <Item
+              title="Cloud Cover"
+              val={data.current.cloud}
+              unit="%"
+              img={Cloudy}
+            />
+            <Item title="UV Index" img={UV} val={data.current.uv} />
+            <Item
+              title="Visibility"
+              val={data.current.vis_km}
+              unit="km"
+              img={Visibility}
+            />
           </div>
         </div>
       </PageTemplate>
     </>
-  )
-}
+  );
+};
 
-export default Page
+export default Page;
