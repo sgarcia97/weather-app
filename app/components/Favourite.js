@@ -30,3 +30,4 @@ const Favourite = ({ id, name, country, onRemove, onSelect }) => {
 };
 
 export default Favourite;
+

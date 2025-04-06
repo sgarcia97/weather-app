@@ -36,6 +36,7 @@ const Page = () => {
   };
 
   return (
+
     <PageTemplate title="Your Favourites">
       <Spacer />
       {favorites.map((fav) => (
@@ -52,3 +53,4 @@ const Page = () => {
 };
 
 export default Page;
+
