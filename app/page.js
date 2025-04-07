@@ -5,6 +5,7 @@ import Image from "next/image";
 import igm from "../public/globe.svg";
 import temp from "../public/svg/060-temperature.svg";
 import Hourly from "../public/hourly.svg";
+import Cloth from "../public/clothes-hanger.svg";
 import Daily from "../public/daily-calendar.svg";
 import Cloudy from "../public/weather/fill/svg/cloudy.svg";
 import Wind from "../public/weather/fill/svg/wind.svg";
@@ -19,6 +20,7 @@ import Moonrise from "../public/weather/fill/svg/moonrise.svg";
 import Moonset from "../public/weather/fill/svg/moonset.svg";
 import Humidity from "../public/weather/fill/svg/humidity.svg";
 import Temperature from "../public/weather/fill/svg/thermometer.svg";
+import Clothing from "./components/Clothing";
 import Pressure from "../public/weather/fill/svg/pressure-low.svg";
 import fore from "../public/svg/021-summer.svg";
 import location from "../public/location.svg";
@@ -116,6 +118,7 @@ const Page = () => {
                         date={whour}
                         icon={ico.icon}
                         temp={val.temp_c}
+                        condition={val.condition.text}
                         wind={val.windchill_c}
                       />
                     );
@@ -144,6 +147,11 @@ const Page = () => {
                 return <Day key={i} wdata={wdata} />;
               })}
             </div>
+            <div className="section-title-small">
+              <Image src={Cloth} width={20} height={20} alt="" />
+              Recommended Clothing
+            </div>
+            <Clothing temp={Math.round(data.current.feelslike_c)} rain={data.current.precip_mm} />
             <div className="section-title-small">
               <Image src={Moon} width={20} height={20} alt="" />
               Astronomy Data
