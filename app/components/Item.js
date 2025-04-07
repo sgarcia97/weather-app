@@ -12,12 +12,17 @@ export const Item = ({title, unit, val="", img}) => {
     )
 }
 
-export const Hour = ({date, icon, temp, wind}) => {
+export const Hour = ({date, icon, temp, condition, wind}) => {
     return(
         <div className="hour">
+            <div className="hour-sect">
             <div>{date}</div>
             <div className={`forecast-img-medium ${icon}`}></div>
+            </div>
+            <div className="hour-sect">
+            <div className="hour-condition">{condition}</div>
             <div>{Math.round(temp)}&deg; | <span style={{color:"#999999"}}>{Math.round(wind)}&deg;</span></div>
+            </div>
         </div>
     )
 }
