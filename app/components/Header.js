@@ -39,10 +39,8 @@ const Header = () => {
         <div className="links">
        
             <Image className="nav-link" alt="Home" src={Home} width={iconSize} onClick={()=>router.push('/')} />
-       
-          {user && (
-            <>
-              <Image
+
+            <Image
                   className="nav-link"
                   alt="Search"
                   src={SearchTop}
@@ -50,7 +48,9 @@ const Header = () => {
                   onClick={()=>setIsSearch(!isSearch)}
                 />
                 {isSearch && <Search/>}
-           
+       
+          {user && (
+            <>
                 <Image
                   className="nav-link"
                   alt="Favourites"
