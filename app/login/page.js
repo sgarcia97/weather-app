@@ -61,7 +61,7 @@ const Login = () => {
         <button className="button-large">Login</button>
         <button className="button-large">Login with Google</button>
         <div>
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link href="/signup" alt="">
             Sign up
           </Link>
