@@ -1,15 +1,16 @@
 "use client";
 
-import { getFavorites } from "../services/dataServices";
+import { getFavorites, deleteFavorite } from "../services/dataServices";
 import PageTemplate from "../components/PageTemplate";
 import Favourite from "../components/Favourite";
 import Spacer from "../components/Spacer";
+import { LoaderSmall, LoaderBig } from "../components/Loader";
 import { useAuth } from "../lib/authContext";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const Page = () => {
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState(null);
   const { user } = useAuth();
   const router = useRouter();
 
@@ -34,12 +35,12 @@ const Page = () => {
     const paramStr = fav.lat + "," + fav.lon;
     router.push(`/details/${paramStr}`);
   };
-
+ 
   return (
 
     <PageTemplate title="Your Favourites">
       <Spacer />
-      {favorites.map((fav) => (
+      {!favorites ? <LoaderBig/> : favorites.map((fav) => (
         <Favourite
           key={fav.id}
           name={fav.name}

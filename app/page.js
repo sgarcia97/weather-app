@@ -26,19 +26,21 @@ import Landing from "./components/Landing";
 import { Item, Hour, Day } from "./components/Item";
 import PageTemplate from "./components/PageTemplate";
 import { weatherIcons } from "./api/weathericons";
-import { fData, forecastdat, currentdat } from "./api/weather";
+import { forecastData, astronomyData} from "./api/weather";
 import { useState, useEffect } from "react";
 import { useAuth } from "./lib/authContext";
 
 const Page = () => {
   const [data, setData] = useState(null);
+  const [adata, setAData] = useState(null)
   const [def, setDef] = useState("Calgary");
   const { user } = useAuth();
 
   useEffect(() => {
-    fData.then((d) => setData(d));
+    forecastData().then((d) => setData(d));
+    astronomyData().then((d) => setAData(d));
   }, []);
-  console.log(data);
+
 
   if (!data)
     return (
@@ -56,9 +58,11 @@ const Page = () => {
       <PageTemplate>
         <Landing title="Welcome to ClimApp" />
         <div className="section-title">
+          <div className="section-title-sect">
           <Image alt="weather" width={20} height={20} src={location} />
           {data.location.name}, {data.location.country} | Last updated{" "}
           {moment(data.current.last_updated).format("ddd MMM D - h:mm a")}
+          </div>
         </div>
         <div className="section">
           <div className="section2">
@@ -125,7 +129,7 @@ const Page = () => {
             </div>
             <div className="forecast-wrapper">
               {data.forecast.forecastday.map((day, i) => {
-                let dd = moment(day.date).format("ddd Do");
+                let dd = moment(day.date).format("ddd D");
                 const ic = weatherIcons.find((val) => {
                   return val.code === day.day.condition.code;
                 });
@@ -133,7 +137,7 @@ const Page = () => {
                   date: dd,
                   icon: ic.icon,
                   chance: day.day.daily_chance_of_rain,
-                  amt: day.day.totalprecip_mm,
+                  amt: day.day.condition.text,
                   max: day.day.maxtemp_c,
                   min: day.day.mintemp_c,
                 };
@@ -144,6 +148,7 @@ const Page = () => {
               <Image src={Moon} width={20} height={20} alt="" />
               Astronomy Data
             </div>
+            { 
             <div>
               <table>
                 <tbody>
@@ -154,7 +159,7 @@ const Page = () => {
                         Sunrise
                       </div>
                     </td>
-                    <td></td>
+                    <td>{}</td>
                   </tr>
                   <tr>
                     <td>
@@ -186,7 +191,9 @@ const Page = () => {
                 </tbody>
               </table>
             </div>
+}
           </div>
+            
           <div className="section1">
             <Item
               title="Precipitation"

@@ -1,6 +1,8 @@
 
-const currentData = async () => {
-    const url = "https://api.weatherapi.com/v1/current.json?q=auto:ip&key="+process.env.NEXT_PUBLIC_ANTI;
+import moment from "moment";
+
+export const forecastData = async (location='auto:ip') => {
+    const url = `https://api.weatherapi.com/v1/forecast.json?q=${location}&days=7&aqi=yes&alerts=yes&key=${process.env.NEXT_PUBLIC_ANTI}`;
     const options = {
         method: "GET",
     };
@@ -14,24 +16,26 @@ const currentData = async () => {
     }
   }
 
-  const forecastData = async () => {
-    const url = "https://api.weatherapi.com/v1/forecast.json?q=auto:ip&days=3&aqi=yes&alerts=yes&key="+process.env.NEXT_PUBLIC_ANTI;
-    const options = {
+export const searchWeather = async (search) => {
+    if(location != ""){
+        const url = `https://api.weatherapi.com/v1/search.json?q=${search}&key=${process.env.NEXT_PUBLIC_ANTI}`;
+        const options = {
         method: "GET",
-    };
-        
+        };
+
     try {
         const response = await fetch(url, options);
         const result = await response.json();
         return result
-    }catch(error) {
-       return error.message
+    } catch (error) {
+        alert("Error getting search results")
     }
-  }
+    }
+}
 
-const astronomyData = async () => {
+export const astronomyData = async (location='auto:ip') => {
     const d = new Date('Y-m-d')
-    const url = "https://api.weatherapi.com/v1/astronomy.json?q=auto:ip&dt="+d+"&key="+process.env.PUBLIC_NEXT_ANTI;
+    const url = `https://api.weatherapi.com/v1/astronomy.json?q=${location}&dt=${moment().format('YYYY-MM-DD')}&key=${process.env.PUBLIC_NEXT_ANTI}`;
     const options = {
         method: "GET",
     };
@@ -44,8 +48,4 @@ const astronomyData = async () => {
         return error.message
     }
 }
-
-export const cData = currentData()
-export const fData = forecastData()
-//export const aData = astronomyData()
 

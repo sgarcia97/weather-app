@@ -16,7 +16,7 @@ export const Hour = ({date, icon, temp, wind}) => {
     return(
         <div className="hour">
             <div>{date}</div>
-            <div className={`forecast-img ${icon}`}></div>
+            <div className={`forecast-img-medium ${icon}`}></div>
             <div>{Math.round(temp)}&deg; | <span style={{color:"#999999"}}>{Math.round(wind)}&deg;</span></div>
         </div>
     )
@@ -25,15 +25,17 @@ export const Hour = ({date, icon, temp, wind}) => {
 export const Day = ({wdata}) => {
     return(
         <div className="forecast">
-                            <div>{wdata.date}</div>
-                        
-                            <div className={`forecast-img-medium ${wdata.icon}`}></div>
-                            <div className="h-align"><Image alt="" width={20} height={20} src={Raindrops}/>{wdata.chance}%</div>
-                            <div>{wdata.amt} mm</div>
-                            <div className="forecast-temp">
-                              <span>{Math.round(wdata.max)}</span>
-                              <span>{Math.round(wdata.min)}</span></div>
-                          </div>
+            <div className="forecast-sect">
+                <div style={{minWidth:60, maxWidth:60}}>{wdata.date}</div>       
+                <div className={`forecast-img ${wdata.icon}`}></div>
+                <div className="h-align" style={{minWidth:60, maxWidth:60}}><Image alt="" width={20} height={20} src={Raindrops}/>{wdata.chance}%</div>
+                <div className="forecast-sect">{wdata.amt}</div>
+            </div>
+            
+            <div className="forecast-temp">
+                <span>{Math.round(wdata.max)}&deg;</span>
+                <span>{Math.round(wdata.min)}&deg;</span></div>
+            </div>
     )
 }
 
