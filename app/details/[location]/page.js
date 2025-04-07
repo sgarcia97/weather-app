@@ -48,7 +48,7 @@ const Page = () => {
   //console.log(data);
   useEffect(() => {
     forecastData(params.location).then(d=>setData(d))
-    astronomyData(params.location).then(d=>setAData(d))
+    //astronomyData(params.location).then(d=>setAData(d))
     const checkIfFavorite = async () => {
       // wait for user
       if (!user) return;
@@ -104,7 +104,7 @@ const Page = () => {
   return (
     <>
       <PageTemplate>
-        <Landing title={data.location.name} />
+     
         <div className="section-title">
           <div className="section-title-sect">
           <Image alt="weather" width={20} height={20} src={location} />

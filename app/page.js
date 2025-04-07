@@ -58,9 +58,11 @@ const Page = () => {
       <PageTemplate>
         <Landing title="Welcome to ClimApp" />
         <div className="section-title">
+          <div className="section-title-sect">
           <Image alt="weather" width={20} height={20} src={location} />
           {data.location.name}, {data.location.country} | Last updated{" "}
           {moment(data.current.last_updated).format("ddd MMM D - h:mm a")}
+          </div>
         </div>
         <div className="section">
           <div className="section2">
@@ -135,7 +137,7 @@ const Page = () => {
                   date: dd,
                   icon: ic.icon,
                   chance: day.day.daily_chance_of_rain,
-                  amt: day.day.totalprecip_mm,
+                  amt: day.day.condition.text,
                   max: day.day.maxtemp_c,
                   min: day.day.mintemp_c,
                 };

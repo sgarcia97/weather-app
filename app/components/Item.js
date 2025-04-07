@@ -26,15 +26,15 @@ export const Day = ({wdata}) => {
     return(
         <div className="forecast">
             <div className="forecast-sect">
-                <div style={{width:70}}>{wdata.date}</div>       
+                <div style={{minWidth:60, maxWidth:60}}>{wdata.date}</div>       
                 <div className={`forecast-img ${wdata.icon}`}></div>
-                <div className="h-align"><Image alt="" width={20} height={20} src={Raindrops}/>{wdata.chance}%</div>
-                <div>{wdata.amt} mm</div>
+                <div className="h-align" style={{minWidth:60, maxWidth:60}}><Image alt="" width={20} height={20} src={Raindrops}/>{wdata.chance}%</div>
+                <div className="forecast-sect">{wdata.amt}</div>
             </div>
             
             <div className="forecast-temp">
-                <span>{Math.round(wdata.max)}</span>
-                <span>{Math.round(wdata.min)}</span></div>
+                <span>{Math.round(wdata.max)}&deg;</span>
+                <span>{Math.round(wdata.min)}&deg;</span></div>
             </div>
     )
 }

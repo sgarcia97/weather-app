@@ -8,7 +8,6 @@ import { useRouter } from 'next/navigation'
 
 const Landing = ({title}) => {
 
-    const [search, setSearch] = useState(null)
     const [data, setData] = useState([])
     const router = useRouter()
 
