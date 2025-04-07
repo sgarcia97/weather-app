@@ -18,10 +18,12 @@ const Landing = ({title}) => {
     return (
         <div className="landing">
             <div className="landing-title">{title.replace(/<[^>]*>?/gm, '')}</div>
+            <div className="landing-section-search">
             <input type="search" onChange={(e)=>handleSearch(e.target.value)} placeholder="Search for weather in your area"/>
             <div className="search-results">{data.map((res,i)=>{
                 return <div onClick={()=>router.push(`/details/${res.name}`)} className="search-item" key={i}><Image alt="" src={location} width={20} height={20}/>{res.name}, {res.region}, {res.country}</div>
             })}</div>
+            </div>
         </div>
     )
 }

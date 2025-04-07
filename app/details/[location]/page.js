@@ -7,6 +7,7 @@ import Hourly from "../../../public/hourly.svg";
 import Daily from "../../../public/daily-calendar.svg";
 import Mist from "../../../public/weather/fill/svg/mist.svg";
 import Raindrops from "../../../public/weather/fill/svg/raindrops.svg";
+import Cloth from "../../../public/clothes-hanger.svg";
 import Cloudy from "../../../public/weather/fill/svg/cloudy.svg";
 import Wind from "../../../public/weather/fill/svg/wind.svg";
 import UV from "../../../public/weather/fill/svg/uv-index.svg";
@@ -21,6 +22,7 @@ import Moonrise from "../../../public/weather/fill/svg/moonrise.svg";
 import Moonset from "../../../public/weather/fill/svg/moonset.svg";
 import Moon from "../../../public/moon-stars.svg";
 import location from "../../../public/location.svg";
+import Clothing from "@/app/components/Clothing";
 // import heartFilled from "../../../public/heart-filled.svg";
 // import heartInitial from "../../../public/heart-initial.svg";
 import { weatherIcons } from "../../api/weathericons";
@@ -54,6 +56,7 @@ const Page = () => {
       if (!user) return;
 
       const { favorites } = await getFavorites(user.uid);
+      
       const isLocationFavorite = favorites.some(
         (fav) =>
           fav.name === data?.location.name &&
@@ -61,6 +64,7 @@ const Page = () => {
           fav.lon === data?.location.lon
       );
       setIsFavorite(isLocationFavorite);
+   
     };
 
     if (data && user) {
@@ -70,9 +74,13 @@ const Page = () => {
 
   const toggleFavorite = async () => {
     try {
+      if(!user){
+        alert('You need to login to add favourites')
+      }else{
       if (isFavorite) {
         // remove
         await deleteFavorite(user.uid, params.location);
+        console.log('delete')
       } else {
         // add
         await addFavorite(user.uid, {
@@ -83,6 +91,7 @@ const Page = () => {
         });
       }
       setIsFavorite(!isFavorite);
+    }
     } catch (error) {
       console.error("Error toggling favorite: ", error);
     }
@@ -109,9 +118,9 @@ const Page = () => {
           <div className="section-title-sect">
           <Image alt="weather" width={20} height={20} src={location} />
           {data.location.name}, {data.location.country} | Last updated{" "}
-          {moment(data.current.last_updated).format("ddd MMM D - h:mm a")}</div>
+          {moment(data.current.last_updated).format("ddd MMM D [at] h:mma")}</div>
           {isFavorite ? (
-            <div className="icon-wrapper noselect"><Heart size={20} color="red" fill="red"/></div>
+            <div className="icon-wrapper" onClick={toggleFavorite}><Heart size={20} color="red" fill="red"/></div>
           ) : (
             <div className="icon-wrapper" onClick={toggleFavorite}><Heart size={20} color="red"/></div>
           )}
@@ -120,11 +129,11 @@ const Page = () => {
           <div className="section2">
             <div className="section-title-small">
               <Image src={temp} width={20} height={20} alt="" />
-              Today&apos;s Temperature
+              Today&apos;s Weather
             </div>
 
             <div className="highlight-val">
-              <div className={`forecast-img-large ${icon.icon}`}></div>
+              <div className={`forecast-img-large ${data.current.is_day == 1 ? icon.icon : icon.iconn}`}></div>
               <div className="highlight-info">
                 <span>{Math.round(data.current.temp_c)}&deg;</span>
                 <div className="highlight-desc">
@@ -147,7 +156,8 @@ const Page = () => {
             <div className="hourly-wrapper">
               <Hour
                 date="Now"
-                icon={icon.icon}
+                icon={data.current.is_day == 1 ? icon.icon : icon.iconn}
+                condition={data.current.condition.text}
                 temp={data.current.temp_c}
                 wind={data.current.windchill_c}
               />
@@ -166,7 +176,7 @@ const Page = () => {
                       <Hour
                         key={i}
                         date={whour}
-                        icon={ico.icon}
+                        icon={val.is_day == 1 ? ico.icon : icon.iconn}
                         temp={val.temp_c}
                         wind={val.windchill_c}
                       />
@@ -196,6 +206,11 @@ const Page = () => {
                 return <Day key={i} wdata={wdata} />;
               })}
             </div>
+            <div className="section-title-small">
+              <Image src={Cloth} width={20} height={20} alt="" />
+              Recommended Clothing
+            </div>
+            <Clothing temp={Math.round(data.current.feelslike_c)} rain={data.current.precip_mm} />
             <div className="section-title-small">
               <Image src={Moon} width={20} height={20} alt="" />
               Astronomy Data
