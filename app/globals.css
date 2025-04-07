@@ -140,8 +140,15 @@ body {
   flex-flow:column nowrap;
   align-items:center;
   gap:20px;
-  padding-top:40px;
+
   padding-bottom: 10px;
+}
+
+.landing-section-search{
+  width:350px;
+  display:grid;
+  margin:auto;
+  position:relative;
 }
 
 .landing-title{
@@ -152,13 +159,14 @@ body {
 .landing input{
   border:none;
   height:50px;
-  width:350px;
+ 
   border-radius:10px;
   padding-block:5px;
   padding-left:45px;
   font-family:var(--font);
   font-size:var(--normal);
   outline:none;
+  background-color:#252525;
   background-image:url(../public/search.svg);
   background-size:cover;
   background-position: 15px center;
@@ -173,7 +181,13 @@ body {
 
 .search-results{
   display:grid;
-  width:400px;
+  position:absolute;
+  top:105%;
+  left:0px;
+  right:0px;
+  z-index:3;
+  background-color:#202020;
+  border-radius: 5px;
 }
 
 
@@ -434,18 +448,34 @@ a {
   gap:5px;
 }
 
+.h-align1{
+  display:flex;
+  align-items: center;
+  gap:10px;
+}
+
 .cloudy{
   background-image: url(../public/weather/fill/svg/cloudy.svg);
   background-repeat: no-repeat;
 }
 
-.overcast{
-  background-image: url(../public/weather/fill/svg/overcast.svg);
+.overcast-day{
+  background-image: url(../public/weather/fill/svg/overcast-day.svg);
   background-repeat: no-repeat;
 }
 
-.sun{
-  background-image: url(../public/weather/fill/svg/sun-hot.svg);
+.overcast-night{
+  background-image: url(../public/weather/fill/svg/overcast-night.svg);
+  background-repeat: no-repeat;
+}
+
+.clear-day{
+  background-image: url(../public/weather/fill/svg/clear-day.svg);
+  background-repeat: no-repeat;
+}
+
+.clear-night{
+  background-image: url(../public/weather/fill/svg/clear-night.svg);
   background-repeat: no-repeat;
 }
 
@@ -454,78 +484,152 @@ a {
   background-repeat: no-repeat;
 }
 
-.fog{
-  background-image: url(../public/weather/fill/svg/fog.svg);
+.fog-day{
+  background-image: url(../public/weather/fill/svg/fog-day.svg);
+  background-repeat: no-repeat;
+}
+.fog-night{
+  background-image: url(../public/weather/fill/svg/fog-night.svg);
   background-repeat: no-repeat;
 }
 
-.snow{
-  background-image: url(../public/weather/fill/svg/snow.svg);
+.snow-day{
+  background-image: url(../public/weather/fill/svg/overcast-day-snow.svg);
   background-repeat: no-repeat;
 }
 
-.heavy-snow{
-  background-image: url(../public/weather/fill/svg/extreme-snow.svg);
+.snow-night{
+  background-image: url(../public/weather/fill/svg/overcast-night-snow.svg);
   background-repeat: no-repeat;
 }
 
-.sleet{
-  background-image: url(../public/weather/fill/svg/sleet.svg);
+.heavy-snow-day{
+  background-image: url(../public/weather/fill/svg/extreme-day-snow.svg);
   background-repeat: no-repeat;
 }
 
-.heavy-sleet{
-  background-image: url(../public/weather/fill/svg/extreme-sleet.svg);
+.heavy-snow-night{
+  background-image: url(../public/weather/fill/svg/extreme-night-snow.svg);
   background-repeat: no-repeat;
 }
 
-.drizzle{
-  background-image: url(../public/weather/fill/svg/drizzle.svg);
+.sleet-day{
+  background-image: url(../public/weather/fill/svg/overcast-day-sleet.svg);
   background-repeat: no-repeat;
 }
 
-.heavy-drizzle{
-  background-image: url(../public/weather/fill/svg/extreme-drizzle.svg);
+.sleet-night{
+  background-image: url(../public/weather/fill/svg/overcast-night-sleet.svg);
   background-repeat: no-repeat;
 }
 
-.light-rain{
-  background-image: url(../public/weather/fill/svg/raindrops.svg);
+.heavy-sleet-day{
+  background-image: url(../public/weather/fill/svg/extreme-day-sleet.svg);
   background-repeat: no-repeat;
 }
 
-.rain{
-  background-image: url(../public/weather/fill/svg/rain.svg);
+.heavy-sleet-night{
+  background-image: url(../public/weather/fill/svg/extreme-night-sleet.svg);
   background-repeat: no-repeat;
 }
 
-.heavy-rain{
-  background-image: url(../public/weather/fill/svg/extreme-rain.svg);
+.drizzle-day{
+  background-image: url(../public/weather/fill/svg/overcast-day-drizzle.svg);
   background-repeat: no-repeat;
 }
 
-.partly-cloudy{
-  background-image: url(../public/weather/fill/svg/cloudy.svg);
+.drizzle-night{
+  background-image: url(../public/weather/fill/svg/overcast-night-drizzle.svg);
   background-repeat: no-repeat;
 }
 
-.thunderstorm{
-  background-image: url(../public/weather/fill/svg/thunderstorms-rain.svg);
-}
-
-.thunderstorm-snow{
-  background-image: url(../public/weather/fill/svg/thunderstorms-snow.svg);
+.heavy-drizzle-day{
+  background-image: url(../public/weather/fill/svg/extreme-day-drizzle.svg);
   background-repeat: no-repeat;
 }
 
-.lightning{
-  background-image: url(../public/weather/fill/svg/lightning-bolt.svg);
+.heavy-drizzle-night{
+  background-image: url(../public/weather/fill/svg/extreme-night-drizzle.svg);
+  background-repeat: no-repeat;
+}
+
+.light-rain-day{
+  background-image: url(../public/weather/fill/svg/overcast-day-drizzle.svg);
+  background-repeat: no-repeat;
+}
+
+.light-rain-night{
+  background-image: url(../public/weather/fill/svg/overcast-night-drizzle.svg);
+  background-repeat: no-repeat;
+}
+
+.rain-day{
+  background-image: url(../public/weather/fill/svg/overcast-day-rain.svg);
+  background-repeat: no-repeat;
+}
+
+.rain-night{
+  background-image: url(../public/weather/fill/svg/overcast-night-rain.svg);
+  background-repeat: no-repeat;
+}
+
+.heavy-rain-day{
+  background-image: url(../public/weather/fill/svg/extreme-day-rain.svg);
+  background-repeat: no-repeat;
+}
+
+.heavy-rain-night{
+  background-image: url(../public/weather/fill/svg/extreme-night-rain.svg);
+  background-repeat: no-repeat;
+}
+
+.partly-cloudy-day{
+  background-image: url(../public/weather/fill/svg/partly-cloudy-day.svg);
+  background-repeat: no-repeat;
+}
+
+.partly-cloudy-night{
+  background-image: url(../public/weather/fill/svg/partly-cloudy-night.svg);
+  background-repeat: no-repeat;
+}
+
+.thunderstorms-day{
+  background-image: url(../public/weather/fill/svg/thunderstorms-day-extreme-rain.svg);
+}
+
+.thunderstorms-night{
+  background-image: url(../public/weather/fill/svg/thunderstorms-night-extreme-rain.svg);
+}
+
+.thunderstorms-snow-day{
+  background-image: url(../public/weather/fill/svg/thunderstorms-day-extreme-snow.svg);
+  background-repeat: no-repeat;
+}
+
+.thunderstorms-snow-night{
+  background-image: url(../public/weather/fill/svg/thunderstorms-night-extreme-snow.svg);
+  background-repeat: no-repeat;
+}
+
+.lightning-day{
+  background-image: url(../public/weather/fill/svg/thunderstorms-day.svg);
   background-repeat: no-repeat;
 
 }
 
-.hail{
-  background-image: url(../public/weather/fill/svg/hail.svg);
+.lightning-night{
+  background-image: url(../public/weather/fill/svg/thunderstorms-night.svg);
+  background-repeat: no-repeat;
+
+}
+
+.hail-day{
+  background-image: url(../public/weather/fill/svg/overcast-day-hail.svg);
+  background-repeat: no-repeat;
+}
+
+.hail-night{
+  background-image: url(../public/weather/fill/svg/overcast-night-hail.svg);
   background-repeat: no-repeat;
 }
 

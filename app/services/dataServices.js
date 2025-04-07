@@ -30,7 +30,7 @@ export async function updateFavorite(userId, favoriteId, updatedData) {
   await updateDoc(docRef, updatedData);
 }
 
-//
+// Delete by id
 export async function deleteFavorite(userId, favoriteId) {
   const docRef = doc(db, "users", userId, "favorites", favoriteId);
   await deleteDoc(docRef);

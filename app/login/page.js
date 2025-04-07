@@ -59,7 +59,7 @@ const Login = () => {
           />
         </div>
         <button className="button-large">Login</button>
-        <button className="button-large">Login with Google</button>
+        {/*<button className="button-large">Login with Google</button>*/}
         <div>
           Don&apos;t have an account?{" "}
           <Link href="/signup" alt="">

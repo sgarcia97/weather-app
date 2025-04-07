@@ -26,27 +26,27 @@ const Clothing = ({temp, rain}) => {
             <table>
                 <tbody>
                     <tr>
-                        <td><div className="h-align cloth-title"><Image src={Shirt} alt="" className="cloth-img"/>Shirt</div></td>
+                        <td><div className="h-align1 cloth-title"><Image src={Shirt} alt="" className="cloth-img"/>Shirt</div></td>
                         <td>{cl.shirt}</td>
                     </tr>
                     <tr>
-                        <td><div className="h-align cloth-title"><Image src={Pants} alt="" className="cloth-img"/>Pants</div></td>
+                        <td><div className="h-align1 cloth-title"><Image src={Pants} alt="" className="cloth-img"/>Pants</div></td>
                         <td>{cl.pants}</td>
                     </tr>
                     <tr>
-                        <td><div className="h-align cloth-title"><Image src={Shoes} alt="" className="cloth-img"/>Shoes</div></td>
+                        <td><div className="h-align1 cloth-title"><Image src={Shoes} alt="" className="cloth-img"/>Shoes</div></td>
                         <td>{cl.shoes}</td>
                     </tr>
                     <tr>
-                        <td><div className="h-align cloth-title"><Image src={Hat} alt="" className="cloth-img"/>Accessories</div></td>
+                        <td><div className="h-align1 cloth-title"><Image src={Hat} alt="" className="cloth-img"/>Accessories</div></td>
                         <td>{cl.acc}</td>
                     </tr>
                     <tr>
-                        <td><div className="h-align cloth-title"><Image src={Coat} alt="" className="cloth-img"/>Jacket</div></td>
+                        <td><div className="h-align1 cloth-title"><Image src={Coat} alt="" className="cloth-img"/>Jacket</div></td>
                         <td>{cl.top}</td>
                     </tr>
                     <tr>
-                        <td><div className="h-align cloth-title"><Image src={Umbrella} alt="" className="cloth-img"/>Umbrella</div></td>
+                        <td><div className="h-align1 cloth-title"><Image src={Umbrella} alt="" className="cloth-img"/>Umbrella</div></td>
                         <td>{umbrella()}</td>
                     </tr>
                 </tbody>
