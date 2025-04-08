@@ -219,12 +219,38 @@ const Page = () => {
            </table>
          </div>
 
-         
-         
-         
-         
+
 }
           </div>
+          <div className="section-title-small">
+              
+              Marine Data
+              </div>
+              {data && data.forecast?.forecastday?.[0]?.hour?.[0] && (
+    <div className="overflow-x-auto">
+      <table className="min-w-full border border-gray-300 rounded-lg shadow-md">
+        <thead>
+          <tr className="bg-blue-100 text-gray-700">
+            <th className="px-6 py-3 text-left border">Time</th>
+            <th className="px-6 py-3 text-left border">Wave Height (ft)</th>
+            <th className="px-6 py-3 text-left border">Swell Height (ft)</th>
+            <th className="px-6 py-3 text-left border">Swell Direction</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className="bg-white hover:bg-blue-50 transition-colors">
+            <td className="px-6 py-4 border">{data.forecast.forecastday[0].hour[0].time || '-'}</td>
+            <td className="px-6 py-4 border">{data.forecast.forecastday[0].hour[0].wave_height_ft || '-'}</td>
+            <td className="px-6 py-4 border">{data.forecast.forecastday[0].hour[0].swell_height_ft || '-'}</td>
+            <td className="px-6 py-4 border">{data.forecast.forecastday[0].hour[0].swell_dir || '-'}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  )}
+
+            
+            
             
           <div className="section1">
             <Item
