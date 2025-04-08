@@ -10,24 +10,20 @@ const Search = () => {
   const [query, setQuery] = useState("");
   const router = useRouter();
 
-  useEffect(() => {
-    const timer = setTimeout(async () => {
-      if (query) {
-        await searchWeather(query).then((d) => setData(d));
-      } else {
-        setData([]); // flush
-      }
-    }, 500); // 0.5 sec
 
-    return () => clearTimeout(timer);
-  }, [query]);
+    const handleSearch = async (search) => {
+        if(search != ''){
+        await searchWeather(search).then(d=>setData(d))
+        }
+    }
+
 
   return (
     <div className="search-wrapper">
       <input
         type="search"
         autoFocus
-        onChange={(e) => setQuery(e.target.value)}
+        onChange={(e) => handleSearch(e.target.value)}
         placeholder="Search for Cities"
       />
       <div className="s-results">
