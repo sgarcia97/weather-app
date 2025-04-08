@@ -156,7 +156,7 @@ body {
 .landing input{
   border:none;
   height:50px;
- 
+  color:#dadada;
   border-radius:10px;
   padding-block:5px;
   padding-left:45px;
@@ -268,7 +268,7 @@ a {
   justify-content: space-between;
   gap:10px;
   padding-bottom:10px;
-  border-bottom: solid 1px #202020;
+  border-bottom: solid 1px #303030;
   opacity:0.6;
 }
 
@@ -742,7 +742,7 @@ a {
 /* Header */
 header{
 
- border-bottom:solid 1px #303030;
+ border-bottom:solid 1px #252525;
   padding-inline:20px;
   z-index:5;
   position:sticky;
