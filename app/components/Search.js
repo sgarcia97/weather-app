@@ -12,7 +12,9 @@ const Search = () => {
     const router = useRouter()
 
     const handleSearch = async (search) => {
+        if(search != ''){
         await searchWeather(search).then(d=>setData(d))
+        }
     }
 
     return (

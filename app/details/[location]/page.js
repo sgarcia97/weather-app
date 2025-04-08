@@ -177,7 +177,7 @@ const Page = () => {
                         key={i}
                         date={whour}
                         icon={val.is_day == 1 ? ico.icon : icon.iconn}
-                        condition={val.condition.text+val.condition.code}
+                        condition={val.condition.text}
                         temp={val.temp_c}
                         wind={val.windchill_c}
                       />
