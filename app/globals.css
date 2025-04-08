@@ -152,6 +152,7 @@ body {
   display:grid;
   margin:auto;
   position:relative;
+  z-index:4;
 }
 
 .landing-title{

@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 const Search = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const [query, setQuery] = useState("");
   const router = useRouter();
 
@@ -14,7 +14,9 @@ const Search = () => {
     const handleSearch = async (search) => {
         if(search != ''){
         await searchWeather(search).then(d=>setData(d))
-        }
+        }else{
+          setData(null)
+      }
     }
 
 
@@ -27,7 +29,7 @@ const Search = () => {
         placeholder="Search for Cities"
       />
       <div className="s-results">
-        {data.map((res, i) => {
+        {data && data.map((res, i) => {
           return (
             <div
               onClick={() => router.push(`/details/${res.name}`)}
