@@ -39,12 +39,27 @@ const Page = () => {
   const [adata, setAData] = useState(null)
   const [mdata, setMData] = useState(null)
   const [degree, setDegree] = useState(false)
+  const [deg, setDeg] = useState("C")
   const { user, userProfile } = useAuth();
 
 
   useEffect(() => {
-    //console.log(sessionStorage.getItem('deg'))
-    //setDegree(sessionStorage.getItem('deg'))
+    const checkDegree = () => {
+      if(!localStorage.deg){
+        localStorage.deg = "C"
+        setDegree(false)
+        setDeg(localStorage.deg)
+      }else{
+        if(localStorage.deg == "C"){
+          setDegree(false)
+        }else{
+          setDegree(true)
+        }
+        setDeg(localStorage.deg)
+        console.log('set',localStorage.deg)
+      }
+    }
+    checkDegree()
     forecastData().then((d) => setData(d));
     astronomyData().then((d) => setAData(d));
     marineData().then((d) => {setMData(d)});
@@ -59,7 +74,8 @@ const Page = () => {
 
   const handleDegree = (e) => {
     setDegree(!degree)
-   //sessionStorage.setItem('deg',!degree)
+    let test = !degree ? "F" : "C"
+    localStorage.setItem('deg',test)
   }
 
 
@@ -91,7 +107,7 @@ const Page = () => {
           <div className="section-title-sect">
 
           <Image alt="weather" width={20} height={20} src={location} />
-          {data.location.name}, {data.location.country} | Last updated {moment(data.current.last_updated).format("ddd MMM D [at] h:mma")}
+          {data.location.name}, {data.location.country} | {deg} Last updated {moment(data.current.last_updated).format("ddd MMM D [at] h:mma")}
           </div>
           <div className="h-align1">
             

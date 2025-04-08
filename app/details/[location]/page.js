@@ -50,6 +50,7 @@ const Page = () => {
   const [mdata, setMData] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
   const [degree, setDegree] = useState(false);
+  const [deg, setDeg] = useState("C")
   const params = useParams();
   const { user } = useAuth();
   const [favId, setFavId] = useState(null);
@@ -60,16 +61,34 @@ const Page = () => {
     console.log("refreshed");
   };
 
-  const handleDegree = (e) => {
-    setDegree(!degree);
-    //sessionStorage.setItem('deg',!degree)
-  };
 
   useEffect(() => {
+    const checkDegree = () => {
+      if(!localStorage.deg){
+        localStorage.deg = "C"
+        setDegree(false)
+        setDeg(localStorage.deg)
+      }else{
+        if(localStorage.deg == "C"){
+          setDegree(false)
+        }else{
+          setDegree(true)
+        }
+        setDeg(localStorage.deg)
+        console.log('set',localStorage.deg)
+      }
+    }
+    checkDegree()
     forecastData(params.location).then((d) => setData(d));
     astronomyData(params.location).then((d) => setAData(d));
     marineData(params.location).then((d) => setMData(d));
   }, [params.location]);
+
+  const handleDegree = (e) => {
+    setDegree(!degree)
+    let test = !degree ? "F" : "C"
+    localStorage.setItem('deg',test)
+  }
 
   useEffect(() => {
     const checkIfFavorite = async () => {
