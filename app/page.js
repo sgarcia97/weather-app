@@ -2,6 +2,7 @@
 import { format } from "date-fns";
 import moment from "moment";
 import Image from "next/image";
+import Link from "next/link";
 import igm from "../public/globe.svg";
 import temp from "../public/svg/060-temperature.svg";
 import Hourly from "../public/hourly.svg";
@@ -34,27 +35,32 @@ import { useState, useEffect } from "react";
 import { useAuth } from "./lib/authContext";
 
 const Page = () => {
-  const [data, setData] = useState(null);
-  const [adata, setAData] = useState(null);
-  const [def, setDef] = useState("Calgary");
+
+  const [data, setData] = useState(null)
+  const [adata, setAData] = useState(null)
+  const [degree, setDegree] = useState(false)
   const { user, userProfile } = useAuth();
 
-  const slidersettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
+
   useEffect(() => {
+    //console.log(sessionStorage.getItem('deg'))
+    //setDegree(sessionStorage.getItem('deg'))
     forecastData().then((d) => setData(d));
     astronomyData().then((d) => setAData(d));
+    
   }, []);
-
+  
   const handleRefresh = async () => {
     await forecastData().then((d) => setData(d));
-    console.log("refreshed");
-  };
+
+    console.log('refreshed')
+  }
+
+  const handleDegree = (e) => {
+    setDegree(!degree)
+   //sessionStorage.setItem('deg',!degree)
+  }
+
 
   if (!data)
     return (
@@ -74,21 +80,26 @@ const Page = () => {
       <PageTemplate>
         {user ? (
           <Landing
-            title={`Welcome back, ${displayName}! Here's your weather forecast for today.`}
+            title={`Welcome back, ${displayName}!`} desc={`Here's your weather forecast for today.`}
           />
         ) : (
-          <Landing title="Welcome to ClimApp! Sign-in to save locations." />
+          <Landing title="Welcome to ClimApp!" desc={`Sign-in to save locations.`} />
         )}
 
         <div className="section-title">
           <div className="section-title-sect">
-            <Image alt="weather" width={20} height={20} src={location} />
-            {data.location.name}, {data.location.country} | Last updated{" "}
-            {moment(data.current.last_updated).format("ddd MMM D [at] h:mma")}
+
+          <Image alt="weather" width={20} height={20} src={location} />
+          {data.location.name}, {data.location.country} | Last updated{degree}
+          {moment(data.current.last_updated).format("ddd MMM D [at] h:mma")}
           </div>
-          <div className="icon-wrapper" onClick={handleRefresh}>
-            <Image alt="refresh" width={20} height={20} src={Refresh} />
+          <div className="h-align1">
+            
+          <div className="icon-wrapper" onClick={handleRefresh}><Image alt="refresh" width={20} height={20} src={Refresh} /></div>
+          <span style={{color:'var(--blue', fontSize:'var(--medium)'}}>&deg;{degree ? "F" : "C"}</span>
+          <label className="switch"><input type="checkbox" onChange={handleDegree} checked={degree}/><span className="slider round"></span></label>
           </div>
+
         </div>
         <div className="section">
           <div className="section2">
@@ -104,13 +115,13 @@ const Page = () => {
                 }`}
               ></div>
               <div className="highlight-info">
-                <span>{Math.round(data.current.temp_c)}&deg;</span>
+                <span>{Math.round(degree ? data.current.temp_f : data.current.temp_c)}&deg;</span>
                 <div className="highlight-desc">
                   <div>
-                    Feels like {Math.round(data.current.feelslike_c)}&deg;
+                    Feels like {Math.round(degree ? data.current.feelslike_f : data.current.feelslike_c)}&deg;
                   </div>
                   <div>
-                    Wind Chill {Math.round(data.current.windchill_c)}&deg;
+                    Wind Chill {Math.round(degree ? data.current.windchill_f : data.current.windchill_c)}&deg;
                   </div>
                   <div className="highlight-title">
                     {data.current.condition.text}
@@ -127,8 +138,8 @@ const Page = () => {
                 date="Now"
                 icon={data.current.is_day == 1 ? icon.icon : icon.iconn}
                 condition={data.current.condition.text}
-                temp={data.current.temp_c}
-                wind={data.current.windchill_c}
+                temp={degree ? data.current.temp_f : data.current.temp_c}
+                wind={degree ? data.current.windchill_f : data.current.windchill_c}
               />
               {data.forecast.forecastday.map((day, i) =>
                 day.hour.map((val, i) => {
@@ -146,9 +157,9 @@ const Page = () => {
                         key={i}
                         date={whour}
                         icon={val.is_day == 1 ? ico.icon : ico.iconn}
-                        temp={val.temp_c}
+                        temp={degree ? val.temp_f : val.temp_c}
                         condition={val.condition.text}
-                        wind={val.windchill_c}
+                        wind={degree ? val.windchill_f : val.windchill_c}
                       />
                     );
                   }
@@ -171,8 +182,8 @@ const Page = () => {
                   icon: ic.icon,
                   chance: day.day.daily_chance_of_rain,
                   amt: day.day.condition.text,
-                  max: day.day.maxtemp_c,
-                  min: day.day.mintemp_c,
+                  max: degree ? day.day.maxtemp_f : day.day.maxtemp_c,
+                  min: degree ? day.day.mintemp_f : day.day.mintemp_c,
                 };
                 return <Day key={i} wdata={wdata} />;
               })}
