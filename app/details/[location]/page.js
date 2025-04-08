@@ -225,28 +225,27 @@ const Page = () => {
                 })
               )}
             </div>
-            <div className="section-title-small">
-              <Image src={Daily} width={20} height={20} alt="" />
-              Daily Forecast
-            </div>
-            <div className="forecast-wrapper">
-              {data.forecast.forecastday.map((day, i) => {
-                let dd = moment(day.date).format("ddd Do");
-                const ic = weatherIcons.find((val) => {
-                  return val.code === day.day.condition.code;
-                });
-                const wdata = {
-                  date: dd,
-                  icon: ic.icon,
-                  chance: day.day.daily_chance_of_rain,
-                  condition: day.day.condition.text,
-                  amt: day.day.totalprecip_mm,
-                  max: degree ? day.day.maxtemp_f : day.day.maxtemp_c,
-                  min: degree ? day.day.mintemp_f : day.day.mintemp_c,
-                };
-                return <Day key={i} wdata={wdata} />;
-              })}
-            </div>
+             <div className="section-title-small">
+                          <Image src={Daily} width={20} height={20} alt="" />
+                          Daily Forecast
+                        </div>
+                        <div className="forecast-wrapper">
+                          {data.forecast.forecastday.map((day, i) => {
+                            let dd = moment(day.date).format("ddd D");
+                            const ic = weatherIcons.find((val) => {
+                              return val.code === day.day.condition.code;
+                            });
+                            const wdata = {
+                              date: dd,
+                              icon: ic.icon,
+                              chance: day.day.daily_chance_of_rain,
+                              amt: day.day.condition.text,
+                              max: degree ? day.day.maxtemp_f : day.day.maxtemp_c,
+                              min: degree ? day.day.mintemp_f : day.day.mintemp_c,
+                            };
+                            return <Day key={i} wdata={wdata} />;
+                          })}
+                        </div>
             <div className="section-title-small">
               <Image src={Cloth} width={20} height={20} alt="" />
               Recommended Clothing
