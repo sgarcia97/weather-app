@@ -27,15 +27,13 @@ export const searchWeather = async (search = "") => {
       const result = await response.json();
       return result;
     } catch (error) {
-      alert("Error getting search results");
+      return error.message
     }
   }
 };
 
 export const astronomyData = async (location = "auto:ip") => {
-  const url = `https://api.weatherapi.com/v1/astronomy.json?q=${location}&dt=${moment().format(
-    "YYYY-MM-DD"
-  )}&key=${process.env.NEXT_PUBLIC_ANTI}`;
+  const url = `https://api.weatherapi.com/v1/astronomy.json?q=${location}&dt=${moment().format("YYYY-MM-DD")}&key=${process.env.NEXT_PUBLIC_ANTI}`;
   const options = { method: "GET" };
 
   try {
@@ -43,12 +41,12 @@ export const astronomyData = async (location = "auto:ip") => {
     const result = await response.json();
     return result;
   } catch (error) {
-    alert("Error getting search results");
+    return error.message
   }
 };
   
 export const marineData = async (location = 'auto:ip') => {
-  const url = `https://api.weatherapi.com/v1/marine.json?q=${location}&dt=${moment().format('YYYY-MM-DD')}&key=${process.env.NEXT_PUBLIC_ANTI}`;
+  const url = `https://api.weatherapi.com/v1/marine.json?key=${process.env.NEXT_PUBLIC_ANTI}&q=${location}&days=1`;
   const options = { method: "GET" };
 
   try {
@@ -56,10 +54,10 @@ export const marineData = async (location = 'auto:ip') => {
     const result = await response.json();
     return result; 
   } catch (error) {
-    return { marine: { forecast: { forecastday: [{}] } } };
+    return error.message
   }
 };
-
+/*
   export const parseAstronomyData = (data) => {
     const astro = data.astro || {};
      return {
@@ -79,3 +77,4 @@ export const marineData = async (location = 'auto:ip') => {
     };
   };
   
+*/
