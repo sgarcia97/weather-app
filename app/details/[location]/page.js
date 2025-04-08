@@ -50,7 +50,7 @@ const Page = () => {
   const { user } = useAuth();
 
   const handleRefresh = async () => {
-    await forecastData().then((d) => setData(d));
+    await forecastData(params.location).then((d) => setData(d));
 
     console.log('refreshed')
   }
