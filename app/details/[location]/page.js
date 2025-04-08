@@ -47,24 +47,34 @@ const Page = () => {
   const params = useParams();
   const { user } = useAuth();
 
-  //console.log(data);
   useEffect(() => {
-    forecastData(params.location).then(d=>setData(d))
-    //astronomyData(params.location).then(d=>setAData(d))
+    forecastData(params.location).then((d) => setData(d));
+  }, [params.location]);
+
+  useEffect(() => {
     const checkIfFavorite = async () => {
-      // wait for user
       if (!user) return;
 
       const { favorites } = await getFavorites(user.uid);
-      
-      const isLocationFavorite = favorites.some(
-        (fav) =>
-          fav.name === data?.location.name &&
-          fav.lat === data?.location.lat &&
-          fav.lon === data?.location.lon
-      );
+
+      console.log("Current location:", data?.location);
+      console.log("Saved favorites:", favorites);
+
+      const isLocationFavorite = favorites.some((fav) => {
+        console.log("Checking against favorite:", fav);
+        const nameMatch = fav.name === data?.location.name;
+        const threshold = 0.01;
+        const latMatch = Math.abs(fav.lat - data?.location.lat) < threshold;
+        const lonMatch = Math.abs(fav.lon - data?.location.lon) < threshold;
+
+        console.log({ nameMatch, latMatch, lonMatch });
+
+        return nameMatch && latMatch && lonMatch;
+      });
+
+      console.log("Is favorite?", isLocationFavorite);
+
       setIsFavorite(isLocationFavorite);
-   
     };
 
     if (data && user) {
@@ -74,24 +84,24 @@ const Page = () => {
 
   const toggleFavorite = async () => {
     try {
-      if(!user){
-        alert('You need to login to add favourites')
-      }else{
-      if (isFavorite) {
-        // remove
-        await deleteFavorite(user.uid, params.location);
-        console.log('delete')
+      if (!user) {
+        alert("You need to login to add favourites");
       } else {
-        // add
-        await addFavorite(user.uid, {
-          name: data.location.name,
-          country: data.location.country,
-          lat: data.location.lat,
-          lon: data.location.lon,
-        });
+        if (isFavorite) {
+          // remove
+          await deleteFavorite(user.uid, params.location);
+          console.log("delete");
+        } else {
+          // add
+          await addFavorite(user.uid, {
+            name: data.location.name,
+            country: data.location.country,
+            lat: data.location.lat,
+            lon: data.location.lon,
+          });
+        }
+        setIsFavorite(!isFavorite);
       }
-      setIsFavorite(!isFavorite);
-    }
     } catch (error) {
       console.error("Error toggling favorite: ", error);
     }
@@ -113,16 +123,20 @@ const Page = () => {
   return (
     <>
       <PageTemplate>
-     
         <div className="section-title">
           <div className="section-title-sect">
-          <Image alt="weather" width={20} height={20} src={location} />
-          {data.location.name}, {data.location.country} | Last updated{" "}
-          {moment(data.current.last_updated).format("ddd MMM D [at] h:mma")}</div>
+            <Image alt="weather" width={20} height={20} src={location} />
+            {data.location.name}, {data.location.country} | Last updated{" "}
+            {moment(data.current.last_updated).format("ddd MMM D [at] h:mma")}
+          </div>
           {isFavorite ? (
-            <div className="icon-wrapper" onClick={toggleFavorite}><Heart size={20} color="red" fill="red"/></div>
+            <div className="icon-wrapper" onClick={toggleFavorite}>
+              <Heart size={20} color="red" fill="red" />
+            </div>
           ) : (
-            <div className="icon-wrapper" onClick={toggleFavorite}><Heart size={20} color="red"/></div>
+            <div className="icon-wrapper" onClick={toggleFavorite}>
+              <Heart size={20} color="red" />
+            </div>
           )}
         </div>
         <div className="section">
@@ -133,7 +147,11 @@ const Page = () => {
             </div>
 
             <div className="highlight-val">
-              <div className={`forecast-img-large ${data.current.is_day == 1 ? icon.icon : icon.iconn}`}></div>
+              <div
+                className={`forecast-img-large ${
+                  data.current.is_day == 1 ? icon.icon : icon.iconn
+                }`}
+              ></div>
               <div className="highlight-info">
                 <span>{Math.round(data.current.temp_c)}&deg;</span>
                 <div className="highlight-desc">
@@ -212,7 +230,10 @@ const Page = () => {
               <Image src={Cloth} width={20} height={20} alt="" />
               Recommended Clothing
             </div>
-            <Clothing temp={Math.round(data.current.feelslike_c)} rain={data.current.precip_mm} />
+            <Clothing
+              temp={Math.round(data.current.feelslike_c)}
+              rain={data.current.precip_mm}
+            />
             <div className="section-title-small">
               <Image src={Moon} width={20} height={20} alt="" />
               Astronomy Data
