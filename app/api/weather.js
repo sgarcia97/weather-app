@@ -33,13 +33,6 @@ export const searchWeather = async (search) => {
     }
 }
 
-export const astronomyData = async (location='auto:ip') => {
-    const d = new Date()
-    const url = `https://api.weatherapi.com/v1/astronomy.json?q=${location}&dt=${moment(d).format('YYYY-MM-DD')}&key=${process.env.NEXT_PUBLIC_ANTI}`;
-    const options = {
-        method: "GET",
-    };
-
 export const astronomyData = async (location = 'auto:ip') => {
     const url = `https://api.weatherapi.com/v1/astronomy.json?q=${location}&dt=${moment().format('YYYY-MM-DD')}&key=${process.env.NEXT_PUBLIC_ANTI}`;
     const options = { method: "GET" };
