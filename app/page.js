@@ -16,14 +16,11 @@ import Visibility from "../public/weather/fill/svg/fog.svg";
 import Rain from "../public/weather/fill/svg/raindrops.svg";
 import Mist from "../public/weather/fill/svg/mist.svg";
 import Moon from "../public/moon-stars.svg";
-import Sunrise from "../public/weather/fill/svg/sunrise.svg";
-import Sunset from "../public/weather/fill/svg/sunset.svg";
-import Moonrise from "../public/weather/fill/svg/moonrise.svg";
-import Moonset from "../public/weather/fill/svg/moonset.svg";
 import Humidity from "../public/weather/fill/svg/humidity.svg";
 import Temperature from "../public/weather/fill/svg/thermometer.svg";
 import Clothing from "./components/Clothing";
 import Pressure from "../public/weather/fill/svg/pressure-low.svg";
+import Anchor from "../public/anchor.svg";
 import fore from "../public/svg/021-summer.svg";
 import location from "../public/location.svg";
 import Landing from "./components/Landing";
@@ -33,11 +30,14 @@ import { weatherIcons } from "./api/weathericons";
 import { forecastData, astronomyData, marineData } from "./api/weather";
 import { useState, useEffect } from "react";
 import { useAuth } from "./lib/authContext";
+import Astronomy from "./components/Astronomy";
+import Marine from "./components/Marine";
 
 const Page = () => {
 
   const [data, setData] = useState(null)
   const [adata, setAData] = useState(null)
+  const [mdata, setMData] = useState(null)
   const [degree, setDegree] = useState(false)
   const { user, userProfile } = useAuth();
 
@@ -47,8 +47,9 @@ const Page = () => {
     //setDegree(sessionStorage.getItem('deg'))
     forecastData().then((d) => setData(d));
     astronomyData().then((d) => setAData(d));
-    
-  }, []);
+    marineData('Calgary').then((d) => {setMData(d)});
+    console.log(mdata)
+  }, [mdata]);
   
   const handleRefresh = async () => {
     await forecastData().then((d) => setData(d));
@@ -196,54 +197,6 @@ const Page = () => {
               temp={Math.round(data.current.feelslike_c)}
               rain={data.current.precip_mm}
             />
-            <div className="section-title-small">
-              <Image src={Moon} width={20} height={20} alt="" />
-              Astronomy Data
-            </div>
-            {
-              <div>
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <div className="h-align">
-                          <Image src={Sunrise} alt="" width={25} height={25} />
-                          Sunrise
-                        </div>
-                      </td>
-                      <td>{adata?.astronomy?.astro?.sunrise || "--"}</td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div className="h-align">
-                          <Image src={Sunset} alt="" width={25} height={25} />
-                          Sunset
-                        </div>
-                      </td>
-                      <td>{adata?.astronomy?.astro?.sunset || "--"}</td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div className="h-align">
-                          <Image src={Moonrise} alt="" width={25} height={25} />
-                          Moonrise
-                        </div>
-                      </td>
-                      <td>{adata?.astronomy?.astro?.moonrise || "--"}</td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div className="h-align">
-                          <Image src={Moonset} alt="" width={25} height={25} />
-                          Moonset
-                        </div>
-                      </td>
-                      <td>{adata?.astronomy?.astro?.moonset || "--"}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            }
           </div>
 
           <div className="section1">
@@ -284,6 +237,34 @@ const Page = () => {
               unit="km"
               img={Visibility}
             />
+          </div>
+
+          {/* ASTRONOMY AND MARINE DATA */}
+          <div className="section2">
+          <div className="section-title-small">
+              <Image src={Moon} width={20} height={20} alt="" />
+              Look to the Skies
+            </div>
+            { adata &&
+         
+            <Astronomy 
+            sunrise={adata.astronomy.astro.sunrise}
+            sunset={adata.astronomy.astro.sunset}
+            moonrise={adata.astronomy.astro.moonrise}
+            moonset={adata.astronomy.astro.moonset}
+            />
+   
+            }
+            <div className="section-title-small">
+              <Image src={Anchor} width={20} height={20} alt="" />
+              Sail the Seas
+            </div>
+            {
+              mdata && mdata.error ? <div className="message">No marine data available for this location</div> :
+            
+            <Marine data={mdata}/>
+            
+            }
           </div>
         </div>
       </PageTemplate>

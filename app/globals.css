@@ -59,6 +59,11 @@ body {
   color:#505050;
 }
 
+.message{
+  color:#999;
+  font-size:var(--small);
+}
+
 /* Clothing */
 .cloth-img{
   width:40px;
@@ -221,6 +226,10 @@ a {
 
 .section2 tr{
   border-bottom: solid 1px #303030;
+}
+
+.section2 tr:nth-last-child(1){
+  border:none;
 }
 
 .section2 td{
