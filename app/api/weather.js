@@ -51,6 +51,7 @@ export const marineData = async (location = "auto:ip") => {
   const url = `https://api.weatherapi.com/v1/marine.json?q=${location}&dt=${moment().format(
     "YYYY-MM-DD"
   )}&key=${process.env.NEXT_PUBLIC_ANTI}`;
+
   const options = { method: "GET" };
 
   try {
