@@ -38,6 +38,7 @@ const Page = () => {
 
   const [data, setData] = useState(null)
   const [adata, setAData] = useState(null)
+  const [mdata, setmData] = useState(null)
   const [degree, setDegree] = useState(false)
   const { user, userProfile } = useAuth();
 
@@ -47,6 +48,7 @@ const Page = () => {
     //setDegree(sessionStorage.getItem('deg'))
     forecastData().then((d) => setData(d));
     astronomyData().then((d) => setAData(d));
+    marineData().then((d) => setAData(d));
     
   }, []);
   
@@ -199,6 +201,8 @@ const Page = () => {
             <div className="section-title-small">
               <Image src={Moon} width={20} height={20} alt="" />
               Astronomy Data
+              
+              
             </div>
             { 
            <div>
@@ -251,30 +255,31 @@ const Page = () => {
               
               Marine Data
               </div>
-              {data && data.forecast?.forecastday?.[0]?.hour?.[0] && (
-    <div className="overflow-x-auto">
-      <table className="min-w-full border border-gray-300 rounded-lg shadow-md">
-        <thead>
-          <tr className="bg-blue-100 text-gray-700">
-            <th className="px-6 py-3 text-left border">Time</th>
-            <th className="px-6 py-3 text-left border">Wave Height (ft)</th>
-            <th className="px-6 py-3 text-left border">Swell Height (ft)</th>
-            <th className="px-6 py-3 text-left border">Swell Direction</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className="bg-white hover:bg-blue-50 transition-colors">
-            <td className="px-6 py-4 border">{data.forecast.forecastday[0].hour[0].time || '-'}</td>
-            <td className="px-6 py-4 border">{data.forecast.forecastday[0].hour[0].wave_height_ft || '-'}</td>
-            <td className="px-6 py-4 border">{data.forecast.forecastday[0].hour[0].swell_height_ft || '-'}</td>
-            <td className="px-6 py-4 border">{data.forecast.forecastday[0].hour[0].swell_dir || '-'}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  )}
+              {mdata && mdata.forecast?.forecastday?.[0]?.hour?.[0] && (
+  <div className="mt-6">
+    <h2 className="text-xl font-bold mb-2">Marine Conditions</h2>
+    <table className="table-auto w-full border">
+      <thead>
+        <tr className="bg-blue-100">
+          <th className="p-2 border">Time</th>
+          <th className="p-2 border">Wave Height (ft)</th>
+          <th className="p-2 border">Swell Height (ft)</th>
+          <th className="p-2 border">Swell Direction</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr className="text-center">
+          <td className="p-2 border">{mdata.forecast.forecastday[0].hour[0].time || '-'}</td>
+          <td className="p-2 border">{mdata.forecast.forecastday[0].hour[0].wave_height_ft || '-'}</td>
+          <td className="p-2 border">{mdata.forecast.forecastday[0].hour[0].swell_height_ft || '-'}</td>
+          <td className="p-2 border">{mdata.forecast.forecastday[0].hour[0].swell_dir || '-'}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+)}
 
-            
+
             
             
           <div className="section1">
