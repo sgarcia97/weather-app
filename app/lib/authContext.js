@@ -35,6 +35,7 @@ export const AuthProvider = ({ children }) => {
       if (currentUser) {
         try {
           const profile = await getUserInfo(currentUser.uid);
+
           setUserProfile(profile || {});
         } catch (error) {
           console.error("Error fetching user profile:", error);
