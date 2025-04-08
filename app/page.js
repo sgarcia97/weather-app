@@ -6,6 +6,7 @@ import igm from "../public/globe.svg";
 import temp from "../public/svg/060-temperature.svg";
 import Hourly from "../public/hourly.svg";
 import Cloth from "../public/clothes-hanger.svg";
+import Refresh from "../public/refresh-arrow.svg";
 import Daily from "../public/daily-calendar.svg";
 import Cloudy from "../public/weather/fill/svg/cloudy.svg";
 import Wind from "../public/weather/fill/svg/wind.svg";
@@ -43,6 +44,10 @@ const Page = () => {
     astronomyData().then((d) => setAData(d));
   }, []);
 
+  const handleRefresh = async () => {
+    await forecastData().then((d) => setData(d));
+  }
+
 
   if (!data)
     return (
@@ -63,18 +68,19 @@ const Page = () => {
           <div className="section-title-sect">
           <Image alt="weather" width={20} height={20} src={location} />
           {data.location.name}, {data.location.country} | Last updated{" "}
-          {moment(data.current.last_updated).format("ddd MMM D - h:mm a")}
+          {moment(data.current.last_updated).format("ddd MMM D [at] h:mma")}
           </div>
+          <div className="icon-wrapper" onClick={handleRefresh}><Image alt="refresh" width={20} height={20} src={Refresh} /></div>
         </div>
         <div className="section">
           <div className="section2">
             <div className="section-title-small">
               <Image src={temp} width={20} height={20} alt="" />
-              Today&apos;s Temperature
+              Today&apos;s Weather
             </div>
 
             <div className="highlight-val">
-              <div className={`forecast-img-large ${icon.icon}`}></div>
+              <div className={`forecast-img-large ${data.current.is_day == 1 ? icon.icon : icon.iconn}`}></div>
               <div className="highlight-info">
                 <span>{Math.round(data.current.temp_c)}&deg;</span>
                 <div className="highlight-desc">
@@ -97,7 +103,8 @@ const Page = () => {
             <div className="hourly-wrapper">
               <Hour
                 date="Now"
-                icon={icon.icon}
+                icon={data.current.is_day == 1 ? icon.icon : icon.iconn}
+                condition={data.current.condition.text}
                 temp={data.current.temp_c}
                 wind={data.current.windchill_c}
               />
@@ -116,7 +123,7 @@ const Page = () => {
                       <Hour
                         key={i}
                         date={whour}
-                        icon={ico.icon}
+                        icon={val.is_day == 1 ? ico.icon : ico.iconn}
                         temp={val.temp_c}
                         condition={val.condition.text}
                         wind={val.windchill_c}
