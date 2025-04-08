@@ -41,7 +41,7 @@ const Header = () => {
             <Image className="nav-link" alt="Home" src={Home} width={iconSize} onClick={()=>router.push('/')} />
 
             <Image
-                  className="nav-link"
+                  className={isSearch ? "nav-link search-selected" : "nav-link"}
                   alt="Search"
                   src={SearchTop}
                   width={iconSize}

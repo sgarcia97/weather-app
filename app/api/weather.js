@@ -16,12 +16,27 @@ export const forecastData = async (location = "auto:ip") => {
 };
 
 export const searchWeather = async (search) => {
-  if (location != "") {
-    const url = `https://api.weatherapi.com/v1/search.json?q=${search}&key=${process.env.NEXT_PUBLIC_ANTI}`;
-    const options = {
-      method: "GET",
-    };
 
+    if(location != ""){
+        const url = `https://api.weatherapi.com/v1/search.json?q=${search}&key=${process.env.NEXT_PUBLIC_ANTI}`;
+        const options = {
+        method: "GET",
+        };
+
+    try {
+        const response = await fetch(url, options);
+        const result = await response.json();
+        return result
+    } catch (error) {
+        alert("Error getting search results")
+    }
+    }
+}
+
+export const astronomyData = async (location = 'auto:ip') => {
+    const url = `https://api.weatherapi.com/v1/astronomy.json?q=${location}&dt=${moment().format('YYYY-MM-DD')}&key=${process.env.NEXT_PUBLIC_ANTI}`;
+    const options = { method: "GET" };
+  
     try {
       const response = await fetch(url, options);
       const result = await response.json();

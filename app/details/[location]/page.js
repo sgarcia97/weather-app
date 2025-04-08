@@ -195,6 +195,7 @@ const Page = () => {
                         key={i}
                         date={whour}
                         icon={val.is_day == 1 ? ico.icon : icon.iconn}
+                        condition={val.condition.text+val.condition.code}
                         temp={val.temp_c}
                         wind={val.windchill_c}
                       />
@@ -217,6 +218,7 @@ const Page = () => {
                   date: dd,
                   icon: ic.icon,
                   chance: day.day.daily_chance_of_rain,
+                  condition: day.day.condition.text,
                   amt: day.day.totalprecip_mm,
                   max: day.day.maxtemp_c,
                   min: day.day.mintemp_c,
