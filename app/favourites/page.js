@@ -35,23 +35,25 @@ const Page = () => {
     const paramStr = fav.lat + "," + fav.lon;
     router.push(`/details/${paramStr}`);
   };
- 
-  return (
 
+  return (
     <PageTemplate title="Your Favourites">
       <Spacer />
-      {!favorites ? <LoaderBig/> : favorites.map((fav) => (
-        <Favourite
-          key={fav.id}
-          name={fav.name}
-          country={fav.country || ""}
-          onRemove={() => handleDelete(fav.id)}
-          onSelect={() => handleSelect(fav)}
-        />
-      ))}
+      {!favorites ? (
+        <LoaderBig />
+      ) : (
+        favorites.map((fav) => (
+          <Favourite
+            key={fav.id}
+            name={fav.name}
+            country={fav.country || ""}
+            onRemove={() => handleDelete(fav.id)}
+            onSelect={() => handleSelect(fav)}
+          />
+        ))
+      )}
     </PageTemplate>
   );
 };
 
 export default Page;
-
