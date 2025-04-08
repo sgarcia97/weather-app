@@ -29,17 +29,15 @@ import Landing from "./components/Landing";
 import { Item, Hour, Day } from "./components/Item";
 import PageTemplate from "./components/PageTemplate";
 import { weatherIcons } from "./api/weathericons";
-import { forecastData, astronomyData, marineData} from "./api/weather";
+import { forecastData, astronomyData, marineData } from "./api/weather";
 import { useState, useEffect } from "react";
 import { useAuth } from "./lib/authContext";
 
-
-
 const Page = () => {
   const [data, setData] = useState(null);
-  const [adata, setAData] = useState(null)
+  const [adata, setAData] = useState(null);
   const [def, setDef] = useState("Calgary");
-  const { user } = useAuth();
+  const { user, userProfile } = useAuth();
 
   const slidersettings = {
     dots: true,
@@ -47,7 +45,7 @@ const Page = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-  }; 
+  };
   useEffect(() => {
     forecastData().then((d) => setData(d));
     astronomyData().then((d) => setAData(d));
@@ -55,9 +53,8 @@ const Page = () => {
 
   const handleRefresh = async () => {
     await forecastData().then((d) => setData(d));
-    console.log('refreshed')
-  }
-
+    console.log("refreshed");
+  };
 
   if (!data)
     return (
@@ -70,17 +67,28 @@ const Page = () => {
     return value.code === data.current.condition.code;
   });
 
+  const displayName = userProfile?.displayName || user?.email || "User";
+
   return (
     <>
       <PageTemplate>
-        <Landing title="Welcome to ClimApp" />
+        {user ? (
+          <Landing
+            title={`Welcome back, ${displayName}! Here's your weather forecast for today.`}
+          />
+        ) : (
+          <Landing title="Welcome to ClimApp! Sign-in to save locations." />
+        )}
+
         <div className="section-title">
           <div className="section-title-sect">
-          <Image alt="weather" width={20} height={20} src={location} />
-          {data.location.name}, {data.location.country} | Last updated{" "}
-          {moment(data.current.last_updated).format("ddd MMM D [at] h:mma")}
+            <Image alt="weather" width={20} height={20} src={location} />
+            {data.location.name}, {data.location.country} | Last updated{" "}
+            {moment(data.current.last_updated).format("ddd MMM D [at] h:mma")}
           </div>
-          <div className="icon-wrapper" onClick={handleRefresh}><Image alt="refresh" width={20} height={20} src={Refresh} /></div>
+          <div className="icon-wrapper" onClick={handleRefresh}>
+            <Image alt="refresh" width={20} height={20} src={Refresh} />
+          </div>
         </div>
         <div className="section">
           <div className="section2">
@@ -90,7 +98,11 @@ const Page = () => {
             </div>
 
             <div className="highlight-val">
-              <div className={`forecast-img-large ${data.current.is_day == 1 ? icon.icon : icon.iconn}`}></div>
+              <div
+                className={`forecast-img-large ${
+                  data.current.is_day == 1 ? icon.icon : icon.iconn
+                }`}
+              ></div>
               <div className="highlight-info">
                 <span>{Math.round(data.current.temp_c)}&deg;</span>
                 <div className="highlight-desc">
@@ -144,7 +156,6 @@ const Page = () => {
               )}
             </div>
 
-         
             <div className="section-title-small">
               <Image src={Daily} width={20} height={20} alt="" />
               Daily Forecast
@@ -170,7 +181,10 @@ const Page = () => {
               <Image src={Cloth} width={20} height={20} alt="" />
               Recommended Clothing
             </div>
-            <Clothing temp={Math.round(data.current.feelslike_c)} rain={data.current.precip_mm} />
+            <Clothing
+              temp={Math.round(data.current.feelslike_c)}
+              rain={data.current.precip_mm}
+            />
             <div className="section-title-small">
               <Image src={Moon} width={20} height={20} alt="" />
               Astronomy Data
