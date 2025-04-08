@@ -9,8 +9,6 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../lib/authContext";
 import { updateUserInfo } from "../services/dataServices";
 import generateWeatherDisplayName from "../utils/nameGenerator";
-import "./profile.css";
-
 
 
 const Page = () => {
@@ -87,9 +85,9 @@ const Page = () => {
   return (
     <PageTemplate title="User Settings">
       <Spacer />
-
+      <div className="settings-subtitle">Update Profile</div>
       <div className="settings-container">
-        <h2 className="settings-title">Update Profile</h2>
+       
 
         <form className="settings-form" onSubmit={handleSubmit}>
           <div className="form-row">
@@ -104,14 +102,9 @@ const Page = () => {
             />
           </div>
 
-          <div className="form-row checkbox-row">
-            <input
-              type="checkbox"
-              id="togglePasswordChange"
-              checked={showPasswordFields}
-              onChange={() => setShowPasswordFields(!showPasswordFields)}
-            />
-            <label htmlFor="togglePasswordChange">Change Password</label>
+          <div className="toggle-section">
+            <div>Change Password</div>
+            <label htmlFor="togglePasswordChange" className="switch"><input id="togglePasswordChange" type="checkbox" onChange={() => setShowPasswordFields(!showPasswordFields)} checked={showPasswordFields}/><span className="slider1 round"></span></label>
           </div>
 
           {showPasswordFields && (
@@ -120,7 +113,7 @@ const Page = () => {
                 <label htmlFor="currentPassword">Current Password</label>
                 <input
                   type="password"
-                  placeholder="current password"
+                  placeholder="Enter current password"
                   id="currentPassword"
                   name="currentPassword"
                   value={currentPassword}
@@ -134,19 +127,19 @@ const Page = () => {
                   type="password"
                   id="newPassword"
                   name="newPassword"
-                  placeholder="new password"
+                  placeholder="Enter new password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                 />
               </div>
 
               <div className="form-row">
-                <label htmlFor="repeatNewPassword">Repeat New Password</label>
+                <label htmlFor="repeatNewPassword">Repeat  Password</label>
                 <input
                   type="password"
                   id="repeatNewPassword"
                   name="repeatNewPassword"
-                  placeholder="repeat new password"
+                  placeholder="Repeat new password"
                   value={repeatNewPassword}
                   onChange={(e) => setRepeatNewPassword(e.target.value)}
                 />

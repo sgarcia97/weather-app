@@ -91,8 +91,7 @@ const Page = () => {
           <div className="section-title-sect">
 
           <Image alt="weather" width={20} height={20} src={location} />
-          {data.location.name}, {data.location.country} | Last updated{degree}
-          {moment(data.current.last_updated).format("ddd MMM D [at] h:mma")}
+          {data.location.name}, {data.location.country} | Last updated {moment(data.current.last_updated).format("ddd MMM D [at] h:mma")}
           </div>
           <div className="h-align1">
             
@@ -199,37 +198,7 @@ const Page = () => {
             />
             
           </div>
-          <div className="section-title-small">
-              
-              Marine Data
-              </div>
-              {mdata && mdata.forecast?.forecastday?.[0]?.hour?.[0] && (
-  <div className="mt-6">
-    <h2 className="text-xl font-bold mb-2">Marine Conditions</h2>
-    <table className="table-auto w-full border">
-      <thead>
-        <tr className="bg-blue-100">
-          <th className="p-2 border">Time</th>
-          <th className="p-2 border">Wave Height (ft)</th>
-          <th className="p-2 border">Swell Height (ft)</th>
-          <th className="p-2 border">Swell Direction</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr className="text-center">
-          <td className="p-2 border">{mdata.forecast.forecastday[0].hour[0].time || '-'}</td>
-          <td className="p-2 border">{mdata.forecast.forecastday[0].hour[0].wave_height_ft || '-'}</td>
-          <td className="p-2 border">{mdata.forecast.forecastday[0].hour[0].swell_height_ft || '-'}</td>
-          <td className="p-2 border">{mdata.forecast.forecastday[0].hour[0].swell_dir || '-'}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-)}
 
-
-            
-            
           <div className="section1">
             <Item
               title="Precipitation"
