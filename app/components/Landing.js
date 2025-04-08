@@ -8,12 +8,14 @@ import { useRouter } from 'next/navigation'
 
 const Landing = ({title, desc}) => {
 
-    const [data, setData] = useState([])
+    const [data, setData] = useState(null)
     const router = useRouter()
 
     const handleSearch = async (search) => {
         if(search != ''){
         await searchWeather(search).then(d=>setData(d))
+        }else{
+            setData(null)
         }
     }
 
@@ -23,7 +25,7 @@ const Landing = ({title, desc}) => {
             <div style={{color:'#999'}}>{desc}</div>
             <div className="landing-section-search">
             <input type="search" onChange={(e)=>handleSearch(e.target.value)} placeholder="Search for weather in your area"/>
-            <div className="search-results">{data.map((res,i)=>{
+            <div className="search-results">{ data && data.map((res,i)=>{
                 return <div onClick={()=>router.push(`/details/${res.name}`)} className="search-item" key={i}><Image alt="" src={location} width={20} height={20}/>{res.name}, {res.region}, {res.country}</div>
             })}</div>
             </div>
