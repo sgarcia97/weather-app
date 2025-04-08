@@ -39,7 +39,7 @@ export const Day = ({wdata}) => {
             
             <div className="forecast-temp">
                 <span>{Math.round(wdata.max)}&deg;</span>
-                <span>{Math.round(wdata.min)}&deg;</span></div>
+                <span style={{color:"#999999"}}>{Math.round(wdata.min)}&deg;</span></div>
             </div>
     )
 }

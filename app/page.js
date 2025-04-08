@@ -33,12 +33,20 @@ import { forecastData, astronomyData} from "./api/weather";
 import { useState, useEffect } from "react";
 import { useAuth } from "./lib/authContext";
 
+
 const Page = () => {
   const [data, setData] = useState(null);
   const [adata, setAData] = useState(null)
   const [def, setDef] = useState("Calgary");
   const { user } = useAuth();
 
+  const slidersettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  }; 
   useEffect(() => {
     forecastData().then((d) => setData(d));
     astronomyData().then((d) => setAData(d));
@@ -46,6 +54,7 @@ const Page = () => {
 
   const handleRefresh = async () => {
     await forecastData().then((d) => setData(d));
+    console.log('refreshed')
   }
 
 
@@ -133,6 +142,8 @@ const Page = () => {
                 })
               )}
             </div>
+
+         
             <div className="section-title-small">
               <Image src={Daily} width={20} height={20} alt="" />
               Daily Forecast
