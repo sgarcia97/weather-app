@@ -150,7 +150,7 @@ body {
 }
 
 .landing-title{
-  font-size:var(--large);
+  font-size:var(--medium);
   font-weight:600;
 }
 
@@ -342,6 +342,7 @@ a {
   border-bottom:solid 1px #303030;
   outline:none;
   font-size:var(--normal);
+  color:#dadada;
 
 }
 

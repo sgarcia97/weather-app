@@ -2,6 +2,7 @@
 import { format } from "date-fns";
 import moment from "moment";
 import Image from "next/image";
+import Link from "next/link";
 import igm from "../public/globe.svg";
 import temp from "../public/svg/060-temperature.svg";
 import Hourly from "../public/hourly.svg";
@@ -41,13 +42,6 @@ const Page = () => {
   const { user, userProfile } = useAuth();
 
 
-  const slidersettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
   useEffect(() => {
     //console.log(sessionStorage.getItem('deg'))
     //setDegree(sessionStorage.getItem('deg'))
@@ -86,10 +80,10 @@ const Page = () => {
       <PageTemplate>
         {user ? (
           <Landing
-            title={`Welcome back, ${displayName}! Here's your weather forecast for today.`}
+            title={`Welcome back, ${displayName}!`} desc={`Here's your weather forecast for today.`}
           />
         ) : (
-          <Landing title="Welcome to ClimApp! Sign-in to save locations." />
+          <Landing title="Welcome to ClimApp!" desc={`Sign-in to save locations.`} />
         )}
 
         <div className="section-title">

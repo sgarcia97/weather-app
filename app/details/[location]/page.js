@@ -8,6 +8,7 @@ import Daily from "../../../public/daily-calendar.svg";
 import Mist from "../../../public/weather/fill/svg/mist.svg";
 import Raindrops from "../../../public/weather/fill/svg/raindrops.svg";
 import Cloth from "../../../public/clothes-hanger.svg";
+import Refresh from "../../../public/refresh-arrow.svg";
 import Cloudy from "../../../public/weather/fill/svg/cloudy.svg";
 import Wind from "../../../public/weather/fill/svg/wind.svg";
 import UV from "../../../public/weather/fill/svg/uv-index.svg";
@@ -44,11 +45,24 @@ const Page = () => {
   const [data, setData] = useState(null);
   const [adata, setAData] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [degree, setDegree] = useState(false)
   const params = useParams();
   const { user } = useAuth();
 
+  const handleRefresh = async () => {
+    await forecastData().then((d) => setData(d));
+
+    console.log('refreshed')
+  }
+
+  const handleDegree = (e) => {
+    setDegree(!degree)
+   //sessionStorage.setItem('deg',!degree)
+  }
+
   useEffect(() => {
     forecastData(params.location).then((d) => setData(d));
+    astronomyData(params.location).then((d) => setAData(d));
   }, [params.location]);
 
   useEffect(() => {
@@ -129,6 +143,12 @@ const Page = () => {
             {data.location.name}, {data.location.country} | Last updated{" "}
             {moment(data.current.last_updated).format("ddd MMM D [at] h:mma")}
           </div>
+
+          <div className="h-align1">
+                      
+                    <div className="icon-wrapper" onClick={handleRefresh}><Image alt="refresh" width={20} height={20} src={Refresh} /></div>
+                    <span style={{color:'var(--blue', fontSize:'var(--medium)'}}>&deg;{degree ? "F" : "C"}</span>
+                    <label className="switch"><input type="checkbox" onChange={handleDegree} checked={degree}/><span className="slider round"></span></label>
           {isFavorite ? (
             <div className="icon-wrapper" onClick={toggleFavorite}>
               <Heart size={20} color="red" fill="red" />
@@ -138,6 +158,7 @@ const Page = () => {
               <Heart size={20} color="red" />
             </div>
           )}
+          </div>
         </div>
         <div className="section">
           <div className="section2">
@@ -153,13 +174,13 @@ const Page = () => {
                 }`}
               ></div>
               <div className="highlight-info">
-                <span>{Math.round(data.current.temp_c)}&deg;</span>
+                <span>{Math.round(degree ? data.current.temp_f : data.current.temp_c)}&deg;</span>
                 <div className="highlight-desc">
                   <div>
-                    Feels like {Math.round(data.current.feelslike_c)}&deg;
+                    Feels like {Math.round(degree ? data.current.feelslike_f : data.current.feelslike_c)}&deg;
                   </div>
                   <div>
-                    Wind Chill {Math.round(data.current.windchill_c)}&deg;
+                    Wind Chill {Math.round(degree ? data.current.windchill_f : data.current.windchill_c)}&deg;
                   </div>
                   <div className="highlight-title">
                     {data.current.condition.text}
@@ -176,8 +197,8 @@ const Page = () => {
                 date="Now"
                 icon={data.current.is_day == 1 ? icon.icon : icon.iconn}
                 condition={data.current.condition.text}
-                temp={data.current.temp_c}
-                wind={data.current.windchill_c}
+                temp={degree ? data.current.temp_f : data.current.temp_c}
+                wind={degree ? data.current.windchill_f : data.current.windchill_c}
               />
               {data.forecast.forecastday.map((day, i) =>
                 day.hour.map((val, i) => {
@@ -196,8 +217,8 @@ const Page = () => {
                         date={whour}
                         icon={val.is_day == 1 ? ico.icon : icon.iconn}
                         condition={val.condition.text}
-                        temp={val.temp_c}
-                        wind={val.windchill_c}
+                        temp={degree ? data.current.temp_f : data.current.temp_c}
+                        wind={degree ? data.current.windchill_f : data.current.windchill_c}
                       />
                     );
                   }
@@ -220,8 +241,8 @@ const Page = () => {
                   chance: day.day.daily_chance_of_rain,
                   condition: day.day.condition.text,
                   amt: day.day.totalprecip_mm,
-                  max: day.day.maxtemp_c,
-                  min: day.day.mintemp_c,
+                  max: degree ? day.day.maxtemp_f : day.day.maxtemp_c,
+                  min: degree ? day.day.mintemp_f : day.day.mintemp_c,
                 };
                 return <Day key={i} wdata={wdata} />;
               })}
@@ -238,48 +259,51 @@ const Page = () => {
               <Image src={Moon} width={20} height={20} alt="" />
               Astronomy Data
             </div>
-            <div>
-              <table>
-                <tbody>
-                  <tr>
-                    <td>
-                      <div className="h-align">
-                        <Image src={Sunrise} alt="" width={25} height={25} />
-                        Sunrise
-                      </div>
-                    </td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="h-align">
-                        <Image src={Sunset} alt="" width={25} height={25} />
-                        Sunset
-                      </div>
-                    </td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="h-align">
-                        <Image src={Moonrise} alt="" width={25} height={25} />
-                        Moonrise
-                      </div>
-                    </td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="h-align">
-                        <Image src={Moonset} alt="" width={25} height={25} />
-                        Moonset
-                      </div>
-                    </td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            {
+            
+                          <div>
+                            <table>
+                              <tbody>
+                                <tr>
+                                  <td>
+                                    <div className="h-align">
+                                      <Image src={Sunrise} alt="" width={25} height={25} />
+                                      Sunrise
+                                    </div>
+                                  </td>
+                                  <td>{adata?.astronomy?.astro?.sunrise || "--"}</td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div className="h-align">
+                                      <Image src={Sunset} alt="" width={25} height={25} />
+                                      Sunset
+                                    </div>
+                                  </td>
+                                  <td>{adata?.astronomy?.astro?.sunset || "--"}</td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div className="h-align">
+                                      <Image src={Moonrise} alt="" width={25} height={25} />
+                                      Moonrise
+                                    </div>
+                                  </td>
+                                  <td>{adata?.astronomy?.astro?.moonrise || "--"}</td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div className="h-align">
+                                      <Image src={Moonset} alt="" width={25} height={25} />
+                                      Moonset
+                                    </div>
+                                  </td>
+                                  <td>{adata?.astronomy?.astro?.moonset || "--"}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+}
           </div>
           <div className="section1">
             <Item
