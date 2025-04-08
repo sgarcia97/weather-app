@@ -16,8 +16,8 @@ export const forecastData = async (location='auto:ip') => {
     }
   }
 
-export const searchWeather = async (search) => {
-    if(location != ""){
+export const searchWeather = async (search="") => {
+    if(search != ""){
         const url = `https://api.weatherapi.com/v1/search.json?q=${search}&key=${process.env.NEXT_PUBLIC_ANTI}`;
         const options = {
         method: "GET",
