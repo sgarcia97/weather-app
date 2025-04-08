@@ -263,7 +263,7 @@ a {
 }
 
 .section-title{
-  font-size:var(--normal);
+  font-size:var(--small);
   font-weight:100;
   display:flex;
   flex-flow:row nowrap;
@@ -762,6 +762,10 @@ nav img:hover{
 
 .nav-link:hover{
   opacity:0.7;
+}
+
+.search-selected{
+  opacity:0.5;
 }
 
 .logo{

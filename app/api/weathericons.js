@@ -26,8 +26,8 @@ export const weatherIcons = [
     },
     {
         code:1063,
-        icon: "partly-cloudy-day",
-        iconn: "partly-cloudy-night"
+        icon: "drizzle-day",
+        iconn: "drizzle-night"
     },
     {
         code:1066,
