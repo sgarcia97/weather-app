@@ -33,8 +33,16 @@ export async function updateFavorite(userId, favoriteId, updatedData) {
 
 // delete favorites
 export async function deleteFavorite(userId, favoriteId) {
-  const docRef = doc(db, "users", userId, "favorites", favoriteId);
-  await deleteDoc(docRef);
+  try {
+    //console.log("userId:", userId);
+    //console.log("favoriteId:", favoriteId);
+    const docRef = doc(db, "users", userId, "favorites", favoriteId);
+    //console.log("docRef:", docRef);
+
+    await deleteDoc(docRef);
+  } catch (err) {
+    ///console.error("Firestore delete error:", err);
+  }
 }
 
 // get favorites (optional pagination)

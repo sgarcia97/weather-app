@@ -47,9 +47,9 @@ const Page = () => {
     //setDegree(sessionStorage.getItem('deg'))
     forecastData().then((d) => setData(d));
     astronomyData().then((d) => setAData(d));
-    marineData('Calgary').then((d) => {setMData(d)});
-    console.log(mdata)
-  }, [mdata]);
+    marineData().then((d) => {setMData(d)});
+  }, []);
+
   
   const handleRefresh = async () => {
     await forecastData().then((d) => setData(d));
@@ -197,8 +197,39 @@ const Page = () => {
               temp={Math.round(data.current.feelslike_c)}
               rain={data.current.precip_mm}
             />
+            
           </div>
+          <div className="section-title-small">
+              
+              Marine Data
+              </div>
+              {mdata && mdata.forecast?.forecastday?.[0]?.hour?.[0] && (
+  <div className="mt-6">
+    <h2 className="text-xl font-bold mb-2">Marine Conditions</h2>
+    <table className="table-auto w-full border">
+      <thead>
+        <tr className="bg-blue-100">
+          <th className="p-2 border">Time</th>
+          <th className="p-2 border">Wave Height (ft)</th>
+          <th className="p-2 border">Swell Height (ft)</th>
+          <th className="p-2 border">Swell Direction</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr className="text-center">
+          <td className="p-2 border">{mdata.forecast.forecastday[0].hour[0].time || '-'}</td>
+          <td className="p-2 border">{mdata.forecast.forecastday[0].hour[0].wave_height_ft || '-'}</td>
+          <td className="p-2 border">{mdata.forecast.forecastday[0].hour[0].swell_height_ft || '-'}</td>
+          <td className="p-2 border">{mdata.forecast.forecastday[0].hour[0].swell_dir || '-'}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+)}
 
+
+            
+            
           <div className="section1">
             <Item
               title="Precipitation"

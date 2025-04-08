@@ -49,20 +49,21 @@ const Page = () => {
   const [adata, setAData] = useState(null);
   const [mdata, setMData] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [degree, setDegree] = useState(false)
+  const [degree, setDegree] = useState(false);
   const params = useParams();
   const { user } = useAuth();
+  const [favId, setFavId] = useState(null);
 
   const handleRefresh = async () => {
     await forecastData(params.location).then((d) => setData(d));
 
-    console.log('refreshed')
-  }
+    console.log("refreshed");
+  };
 
   const handleDegree = (e) => {
-    setDegree(!degree)
-   //sessionStorage.setItem('deg',!degree)
-  }
+    setDegree(!degree);
+    //sessionStorage.setItem('deg',!degree)
+  };
 
   useEffect(() => {
     forecastData(params.location).then((d) => setData(d));
@@ -88,7 +89,9 @@ const Page = () => {
 
         console.log({ nameMatch, latMatch, lonMatch });
 
-        return nameMatch && latMatch && lonMatch;
+        const isFav = nameMatch && latMatch && lonMatch;
+        if (isFav) setFavId(fav.id);
+        return isFav;
       });
 
       console.log("Is favorite?", isLocationFavorite);
@@ -108,15 +111,20 @@ const Page = () => {
       } else {
         if (isFavorite) {
           // remove
-          await deleteFavorite(user.uid, params.location);
+          if (!favId) {
+            console.warn("Favorite ID is missing, cannot delete.");
+            return;
+          }
+
+          await deleteFavorite(user.uid, favId);
           console.log("delete");
         } else {
           // add
           await addFavorite(user.uid, {
             name: data.location.name,
             country: data.location.country,
-            lat: data.location.lat,
-            lon: data.location.lon,
+            lat: Number(data.location.lat.toFixed(3)),
+            lon: Number(data.location.lon.toFixed(3)),
           });
         }
         setIsFavorite(!isFavorite);
@@ -150,19 +158,25 @@ const Page = () => {
           </div>
 
           <div className="h-align1">
-                      
-                    <div className="icon-wrapper" onClick={handleRefresh}><Image alt="refresh" width={20} height={20} src={Refresh} /></div>
-                    <span style={{color:'var(--blue', fontSize:'var(--medium)'}}>&deg;{degree ? "F" : "C"}</span>
-                    <label className="switch"><input type="checkbox" onChange={handleDegree} checked={degree}/><span className="slider round"></span></label>
-          {isFavorite ? (
-            <div className="icon-wrapper" onClick={toggleFavorite}>
-              <Heart size={20} color="red" fill="red" />
+            <div className="icon-wrapper" onClick={handleRefresh}>
+              <Image alt="refresh" width={20} height={20} src={Refresh} />
             </div>
-          ) : (
-            <div className="icon-wrapper" onClick={toggleFavorite}>
-              <Heart size={20} color="red" />
-            </div>
-          )}
+            <span style={{ color: "var(--blue", fontSize: "var(--medium)" }}>
+              &deg;{degree ? "F" : "C"}
+            </span>
+            <label className="switch">
+              <input type="checkbox" onChange={handleDegree} checked={degree} />
+              <span className="slider round"></span>
+            </label>
+            {isFavorite ? (
+              <div className="icon-wrapper" onClick={toggleFavorite}>
+                <Heart size={20} color="red" fill="red" />
+              </div>
+            ) : (
+              <div className="icon-wrapper" onClick={toggleFavorite}>
+                <Heart size={20} color="red" />
+              </div>
+            )}
           </div>
         </div>
         <div className="section">
@@ -179,13 +193,30 @@ const Page = () => {
                 }`}
               ></div>
               <div className="highlight-info">
-                <span>{Math.round(degree ? data.current.temp_f : data.current.temp_c)}&deg;</span>
+                <span>
+                  {Math.round(
+                    degree ? data.current.temp_f : data.current.temp_c
+                  )}
+                  &deg;
+                </span>
                 <div className="highlight-desc">
                   <div>
-                    Feels like {Math.round(degree ? data.current.feelslike_f : data.current.feelslike_c)}&deg;
+                    Feels like{" "}
+                    {Math.round(
+                      degree
+                        ? data.current.feelslike_f
+                        : data.current.feelslike_c
+                    )}
+                    &deg;
                   </div>
                   <div>
-                    Wind Chill {Math.round(degree ? data.current.windchill_f : data.current.windchill_c)}&deg;
+                    Wind Chill{" "}
+                    {Math.round(
+                      degree
+                        ? data.current.windchill_f
+                        : data.current.windchill_c
+                    )}
+                    &deg;
                   </div>
                   <div className="highlight-title">
                     {data.current.condition.text}
@@ -203,7 +234,9 @@ const Page = () => {
                 icon={data.current.is_day == 1 ? icon.icon : icon.iconn}
                 condition={data.current.condition.text}
                 temp={degree ? data.current.temp_f : data.current.temp_c}
-                wind={degree ? data.current.windchill_f : data.current.windchill_c}
+                wind={
+                  degree ? data.current.windchill_f : data.current.windchill_c
+                }
               />
               {data.forecast.forecastday.map((day, i) =>
                 day.hour.map((val, i) => {
@@ -222,35 +255,41 @@ const Page = () => {
                         date={whour}
                         icon={val.is_day == 1 ? ico.icon : icon.iconn}
                         condition={val.condition.text}
-                        temp={degree ? data.current.temp_f : data.current.temp_c}
-                        wind={degree ? data.current.windchill_f : data.current.windchill_c}
+                        temp={
+                          degree ? data.current.temp_f : data.current.temp_c
+                        }
+                        wind={
+                          degree
+                            ? data.current.windchill_f
+                            : data.current.windchill_c
+                        }
                       />
                     );
                   }
                 })
               )}
             </div>
-             <div className="section-title-small">
-                          <Image src={Daily} width={20} height={20} alt="" />
-                          Daily Forecast
-                        </div>
-                        <div className="forecast-wrapper">
-                          {data.forecast.forecastday.map((day, i) => {
-                            let dd = moment(day.date).format("ddd D");
-                            const ic = weatherIcons.find((val) => {
-                              return val.code === day.day.condition.code;
-                            });
-                            const wdata = {
-                              date: dd,
-                              icon: ic.icon,
-                              chance: day.day.daily_chance_of_rain,
-                              amt: day.day.condition.text,
-                              max: degree ? day.day.maxtemp_f : day.day.maxtemp_c,
-                              min: degree ? day.day.mintemp_f : day.day.mintemp_c,
-                            };
-                            return <Day key={i} wdata={wdata} />;
-                          })}
-                        </div>
+            <div className="section-title-small">
+              <Image src={Daily} width={20} height={20} alt="" />
+              Daily Forecast
+            </div>
+            <div className="forecast-wrapper">
+              {data.forecast.forecastday.map((day, i) => {
+                let dd = moment(day.date).format("ddd D");
+                const ic = weatherIcons.find((val) => {
+                  return val.code === day.day.condition.code;
+                });
+                const wdata = {
+                  date: dd,
+                  icon: ic.icon,
+                  chance: day.day.daily_chance_of_rain,
+                  amt: day.day.condition.text,
+                  max: degree ? day.day.maxtemp_f : day.day.maxtemp_c,
+                  min: degree ? day.day.mintemp_f : day.day.mintemp_c,
+                };
+                return <Day key={i} wdata={wdata} />;
+              })}
+            </div>
             <div className="section-title-small">
               <Image src={Cloth} width={20} height={20} alt="" />
               Recommended Clothing
@@ -259,7 +298,7 @@ const Page = () => {
               temp={Math.round(data.current.feelslike_c)}
               rain={data.current.precip_mm}
             />
-          
+
           </div>
           <div className="section1">
             <Item
