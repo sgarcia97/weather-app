@@ -46,20 +46,6 @@ export const astronomyData = async (location = "auto:ip") => {
     alert("Error getting search results");
   }
 };
-
-export const astronomyData = async (location = 'auto:ip') => {
-  const url = `https://api.weatherapi.com/v1/astronomy.json?q=${location}&dt=${moment().format('YYYY-MM-DD')}&key=${process.env.NEXT_PUBLIC_ANTI}`;
-  const options = { method: "GET" };
-
-  try {
-    const response = await fetch(url, options);
-    const result = await response.json();
-    return result; 
-  } catch (error) {
-    return { astronomy: { astro: {} } };
-  }
-};
-
   
 export const marineData = async (location = 'auto:ip') => {
   const url = `https://api.weatherapi.com/v1/marine.json?q=${location}&dt=${moment().format('YYYY-MM-DD')}&key=${process.env.NEXT_PUBLIC_ANTI}`;
