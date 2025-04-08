@@ -2,6 +2,7 @@
   --background: #ffffff;
   --foreground: #171717;
   --blue:#3291d5;
+  --lblue:#86c3db;
 
   /* Font sizes */
   --font:Arial, Helvetica, sans-serif;
@@ -13,12 +14,7 @@
   --eelarge:5rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+
 
 html,
 body {
@@ -26,6 +22,7 @@ body {
   padding:0;
   border:0;
   font-size:var(--normal);
+  background-color:var(--foreground);
 }
 
 html{
@@ -33,9 +30,9 @@ html{
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+
   font-family: var(--font);
+  color:#ffffff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -176,7 +173,7 @@ body {
 
 .landing input:focus, .search-wrapper input:focus{
   outline:solid 2px var(--blue);
-  outline-offset: 2px;
+  outline-offset: 0px;
 }
 
 .search-results{
@@ -641,6 +638,22 @@ a {
   padding-bottom:10px;
 }
 
+.hourly-wrapper::-webkit-scrollbar{
+  width:10px;
+  height:10px;
+}
+
+.hourly-wrapper::-webkit-scrollbar-track{
+  background-color: #202020;
+  border-radius: 20px;
+}
+
+.hourly-wrapper::-webkit-scrollbar-thumb{
+  background-color:var(--blue);
+  border-radius: 20px;
+  cursor:pointer;
+}
+
 .hour{
   border:solid 1px #303030;
   padding:20px;
@@ -729,12 +742,12 @@ a {
 /* Header */
 header{
 
- 
+ border-bottom:solid 1px #303030;
   padding-inline:20px;
   z-index:5;
   position:sticky;
   top:0px;
-  background-color:#000000;
+  background-color:#171717;
 }
 
 nav{
@@ -852,11 +865,7 @@ a:hover{
 }
 
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-}
+
 
 @media screen and (max-width:700px){
   .main{
