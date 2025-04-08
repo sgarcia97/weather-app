@@ -29,9 +29,10 @@ import Landing from "./components/Landing";
 import { Item, Hour, Day } from "./components/Item";
 import PageTemplate from "./components/PageTemplate";
 import { weatherIcons } from "./api/weathericons";
-import { forecastData, astronomyData} from "./api/weather";
+import { forecastData, astronomyData, marineData} from "./api/weather";
 import { useState, useEffect } from "react";
 import { useAuth } from "./lib/authContext";
+
 
 
 const Page = () => {
@@ -175,48 +176,53 @@ const Page = () => {
               Astronomy Data
             </div>
             { 
-            <div>
-              <table>
-                <tbody>
-                  <tr>
-                    <td>
-                      <div className="h-align">
-                        <Image src={Sunrise} alt="" width={25} height={25} />
-                        Sunrise
-                      </div>
-                    </td>
-                    <td>{}</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="h-align">
-                        <Image src={Sunset} alt="" width={25} height={25} />
-                        Sunset
-                      </div>
-                    </td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="h-align">
-                        <Image src={Moonrise} alt="" width={25} height={25} />
-                        Moonrise
-                      </div>
-                    </td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="h-align">
-                        <Image src={Moonset} alt="" width={25} height={25} />
-                        Moonset
-                      </div>
-                    </td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+           <div>
+           <table>
+             <tbody>
+               <tr>
+                 <td>
+                   <div className="h-align">
+                     <Image src={Sunrise} alt="" width={25} height={25} />
+                     Sunrise
+                   </div>
+                 </td>
+                 <td>{adata?.astronomy?.astro?.sunrise || "--"}</td>
+               </tr>
+               <tr>
+                 <td>
+                   <div className="h-align">
+                     <Image src={Sunset} alt="" width={25} height={25} />
+                     Sunset
+                   </div>
+                 </td>
+                 <td>{adata?.astronomy?.astro?.sunset || "--"}</td>
+               </tr>
+               <tr>
+                 <td>
+                   <div className="h-align">
+                     <Image src={Moonrise} alt="" width={25} height={25} />
+                     Moonrise
+                   </div>
+                 </td>
+                 <td>{adata?.astronomy?.astro?.moonrise || "--"}</td>
+               </tr>
+               <tr>
+                 <td>
+                   <div className="h-align">
+                     <Image src={Moonset} alt="" width={25} height={25} />
+                     Moonset
+                   </div>
+                 </td>
+                 <td>{adata?.astronomy?.astro?.moonset || "--"}</td>
+               </tr>
+             </tbody>
+           </table>
+         </div>
+
+         
+         
+         
+         
 }
           </div>
             
