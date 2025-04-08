@@ -11,6 +11,8 @@ import { updateUserInfo } from "../services/dataServices";
 import generateWeatherDisplayName from "../utils/nameGenerator";
 import "./profile.css";
 
+
+
 const Page = () => {
   const [showPasswordFields, setShowPasswordFields] = useState(false);
   const { user, changePassword, userProfile } = useAuth();

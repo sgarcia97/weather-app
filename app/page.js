@@ -29,17 +29,17 @@ import Landing from "./components/Landing";
 import { Item, Hour, Day } from "./components/Item";
 import PageTemplate from "./components/PageTemplate";
 import { weatherIcons } from "./api/weathericons";
-import { forecastData, astronomyData} from "./api/weather";
+import { forecastData, astronomyData, marineData } from "./api/weather";
 import { useState, useEffect } from "react";
 import { useAuth } from "./lib/authContext";
 
-
 const Page = () => {
-  
+
   const [data, setData] = useState(null)
   const [adata, setAData] = useState(null)
   const [degree, setDegree] = useState(false)
-  const { user } = useAuth();
+  const { user, userProfile } = useAuth();
+
 
   const slidersettings = {
     dots: true,
@@ -47,7 +47,7 @@ const Page = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-  }; 
+  };
   useEffect(() => {
     //console.log(sessionStorage.getItem('deg'))
     //setDegree(sessionStorage.getItem('deg'))
@@ -58,6 +58,7 @@ const Page = () => {
   
   const handleRefresh = async () => {
     await forecastData().then((d) => setData(d));
+
     console.log('refreshed')
   }
 
@@ -78,12 +79,22 @@ const Page = () => {
     return value.code === data.current.condition.code;
   });
 
+  const displayName = userProfile?.displayName || user?.email || "User";
+
   return (
     <>
       <PageTemplate>
-        <Landing title="Welcome to ClimApp" />
+        {user ? (
+          <Landing
+            title={`Welcome back, ${displayName}! Here's your weather forecast for today.`}
+          />
+        ) : (
+          <Landing title="Welcome to ClimApp! Sign-in to save locations." />
+        )}
+
         <div className="section-title">
           <div className="section-title-sect">
+
           <Image alt="weather" width={20} height={20} src={location} />
           {data.location.name}, {data.location.country} | Last updated{degree}
           {moment(data.current.last_updated).format("ddd MMM D [at] h:mma")}
@@ -94,6 +105,7 @@ const Page = () => {
           <span style={{color:'var(--blue', fontSize:'var(--medium)'}}>&deg;{degree ? "F" : "C"}</span>
           <label className="switch"><input type="checkbox" onChange={handleDegree} checked={degree}/><span className="slider round"></span></label>
           </div>
+
         </div>
         <div className="section">
           <div className="section2">
@@ -103,7 +115,11 @@ const Page = () => {
             </div>
 
             <div className="highlight-val">
-              <div className={`forecast-img-large ${data.current.is_day == 1 ? icon.icon : icon.iconn}`}></div>
+              <div
+                className={`forecast-img-large ${
+                  data.current.is_day == 1 ? icon.icon : icon.iconn
+                }`}
+              ></div>
               <div className="highlight-info">
                 <span>{Math.round(degree ? data.current.temp_f : data.current.temp_c)}&deg;</span>
                 <div className="highlight-desc">
@@ -157,7 +173,6 @@ const Page = () => {
               )}
             </div>
 
-         
             <div className="section-title-small">
               <Image src={Daily} width={20} height={20} alt="" />
               Daily Forecast
@@ -183,57 +198,60 @@ const Page = () => {
               <Image src={Cloth} width={20} height={20} alt="" />
               Recommended Clothing
             </div>
-            <Clothing temp={Math.round(data.current.feelslike_c)} rain={data.current.precip_mm} />
+            <Clothing
+              temp={Math.round(data.current.feelslike_c)}
+              rain={data.current.precip_mm}
+            />
             <div className="section-title-small">
               <Image src={Moon} width={20} height={20} alt="" />
               Astronomy Data
             </div>
-            { 
-            <div>
-              <table>
-                <tbody>
-                  <tr>
-                    <td>
-                      <div className="h-align">
-                        <Image src={Sunrise} alt="" width={25} height={25} />
-                        Sunrise
-                      </div>
-                    </td>
-                    <td>{}</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="h-align">
-                        <Image src={Sunset} alt="" width={25} height={25} />
-                        Sunset
-                      </div>
-                    </td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="h-align">
-                        <Image src={Moonrise} alt="" width={25} height={25} />
-                        Moonrise
-                      </div>
-                    </td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="h-align">
-                        <Image src={Moonset} alt="" width={25} height={25} />
-                        Moonset
-                      </div>
-                    </td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-}
+            {
+              <div>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div className="h-align">
+                          <Image src={Sunrise} alt="" width={25} height={25} />
+                          Sunrise
+                        </div>
+                      </td>
+                      <td>{adata?.astronomy?.astro?.sunrise || "--"}</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div className="h-align">
+                          <Image src={Sunset} alt="" width={25} height={25} />
+                          Sunset
+                        </div>
+                      </td>
+                      <td>{adata?.astronomy?.astro?.sunset || "--"}</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div className="h-align">
+                          <Image src={Moonrise} alt="" width={25} height={25} />
+                          Moonrise
+                        </div>
+                      </td>
+                      <td>{adata?.astronomy?.astro?.moonrise || "--"}</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div className="h-align">
+                          <Image src={Moonset} alt="" width={25} height={25} />
+                          Moonset
+                        </div>
+                      </td>
+                      <td>{adata?.astronomy?.astro?.moonset || "--"}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            }
           </div>
-            
+
           <div className="section1">
             <Item
               title="Precipitation"
