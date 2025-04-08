@@ -11,10 +11,11 @@ import {
   limit,
   startAfter,
   getDocs,
+  getDoc,
   serverTimestamp,
 } from "firebase/firestore";
 
-// new
+// new favorites
 export async function addFavorite(userId, favoriteData) {
   const favoritesRef = collection(db, "users", userId, "favorites");
   const docRef = await addDoc(favoritesRef, {
@@ -24,13 +25,13 @@ export async function addFavorite(userId, favoriteData) {
   return docRef.id;
 }
 
-// edit
+// edit favorites
 export async function updateFavorite(userId, favoriteId, updatedData) {
   const docRef = doc(db, "users", userId, "favorites", favoriteId);
   await updateDoc(docRef, updatedData);
 }
 
-// Delete by id
+// delete favorites
 export async function deleteFavorite(userId, favoriteId) {
   const docRef = doc(db, "users", userId, "favorites", favoriteId);
   await deleteDoc(docRef);
@@ -61,7 +62,36 @@ export async function getFavorites(userId, pageSize = 10, lastVisible = null) {
       lastVisible: querySnapshot.docs[querySnapshot.docs.length - 1],
     };
   } catch (error) {
-    console.error("Error fetching items: ", error);
+    console.error("Error fetching favorites: ", error);
+    throw error;
+  }
+}
+
+// get user info
+export async function getUserInfo(userId) {
+  try {
+    const docSnap = await getDoc(
+      doc(db, "users", userId, "user_info", "profile")
+    );
+
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching user info:", error);
+    throw error;
+  }
+}
+
+// update user info
+export async function updateUserInfo(userId, updatedData) {
+  try {
+    const docRef = doc(db, "users", userId, "user_info", "profile");
+    await setDoc(docRef, updatedData, { merge: true });
+  } catch (error) {
+    console.error("Error updating user info:", error);
     throw error;
   }
 }
