@@ -6,7 +6,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from 'next/navigation'
 
-const Landing = ({title}) => {
+const Landing = ({title, desc}) => {
 
     const [data, setData] = useState([])
     const router = useRouter()
@@ -20,6 +20,7 @@ const Landing = ({title}) => {
     return (
         <div className="landing">
             <div className="landing-title">{title}</div>
+            <div style={{color:'#999'}}>{desc}</div>
             <div className="landing-section-search">
             <input type="search" onChange={(e)=>handleSearch(e.target.value)} placeholder="Search for weather in your area"/>
             <div className="search-results">{data.map((res,i)=>{
