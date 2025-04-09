@@ -42,7 +42,6 @@ const Page = () => {
   const [deg, setDeg] = useState("C")
   const { user, userProfile } = useAuth();
 
-
   useEffect(() => {
     const checkDegree = () => {
       if(!localStorage.deg){
@@ -62,22 +61,22 @@ const Page = () => {
     checkDegree()
     forecastData().then((d) => setData(d));
     astronomyData().then((d) => setAData(d));
-    marineData().then((d) => {setMData(d)});
+    marineData().then((d) => {
+      setMData(d);
+    });
   }, []);
 
-  
   const handleRefresh = async () => {
     await forecastData().then((d) => setData(d));
 
-    console.log('refreshed')
-  }
+    console.log("refreshed");
+  };
 
   const handleDegree = (e) => {
     setDegree(!degree)
     let test = !degree ? "F" : "C"
     localStorage.setItem('deg',test)
   }
-
 
   if (!data)
     return (
@@ -97,25 +96,33 @@ const Page = () => {
       <PageTemplate>
         {user ? (
           <Landing
-            title={`Welcome back, ${displayName}!`} desc={`Here's your weather forecast for today.`}
+            title={`Welcome back, ${displayName}!`}
+            desc={`Here's your weather forecast for today.`}
           />
         ) : (
-          <Landing title="Welcome to ClimApp!" desc={`Sign-in to save locations.`} />
+          <Landing
+            title="Welcome to ClimApp!"
+            desc={`Sign-in to save locations.`}
+          />
         )}
 
         <div className="section-title">
           <div className="section-title-sect">
-
           <Image alt="weather" width={20} height={20} src={location} />
           {data.location.name}, {data.location.country} | {deg} Last updated {moment(data.current.last_updated).format("ddd MMM D [at] h:mma")}
           </div>
           <div className="h-align1">
-            
-          <div className="icon-wrapper" onClick={handleRefresh}><Image alt="refresh" width={20} height={20} src={Refresh} /></div>
-          <span style={{color:'var(--blue', fontSize:'var(--medium)'}}>&deg;{degree ? "F" : "C"}</span>
-          <label className="switch"><input type="checkbox" onChange={handleDegree} checked={degree}/><span className="slider round"></span></label>
+            <div className="icon-wrapper" onClick={handleRefresh}>
+              <Image alt="refresh" width={20} height={20} src={Refresh} />
+            </div>
+            <span style={{ color: "var(--blue", fontSize: "var(--medium)" }}>
+              &deg;{degree ? "F" : "C"}
+            </span>
+            <label className="switch">
+              <input type="checkbox" onChange={handleDegree} checked={degree} />
+              <span className="slider round"></span>
+            </label>
           </div>
-
         </div>
         <div className="section">
           <div className="section2">
@@ -131,13 +138,30 @@ const Page = () => {
                 }`}
               ></div>
               <div className="highlight-info">
-                <span>{Math.round(degree ? data.current.temp_f : data.current.temp_c)}&deg;</span>
+                <span>
+                  {Math.round(
+                    degree ? data.current.temp_f : data.current.temp_c
+                  )}
+                  &deg;
+                </span>
                 <div className="highlight-desc">
                   <div>
-                    Feels like {Math.round(degree ? data.current.feelslike_f : data.current.feelslike_c)}&deg;
+                    Feels like{" "}
+                    {Math.round(
+                      degree
+                        ? data.current.feelslike_f
+                        : data.current.feelslike_c
+                    )}
+                    &deg;
                   </div>
                   <div>
-                    Wind Chill {Math.round(degree ? data.current.windchill_f : data.current.windchill_c)}&deg;
+                    Wind Chill{" "}
+                    {Math.round(
+                      degree
+                        ? data.current.windchill_f
+                        : data.current.windchill_c
+                    )}
+                    &deg;
                   </div>
                   <div className="highlight-title">
                     {data.current.condition.text}
@@ -155,7 +179,9 @@ const Page = () => {
                 icon={data.current.is_day == 1 ? icon.icon : icon.iconn}
                 condition={data.current.condition.text}
                 temp={degree ? data.current.temp_f : data.current.temp_c}
-                wind={degree ? data.current.windchill_f : data.current.windchill_c}
+                wind={
+                  degree ? data.current.windchill_f : data.current.windchill_c
+                }
               />
               {data.forecast.forecastday.map((day, i) =>
                 day.hour.map((val, i) => {
@@ -212,7 +238,6 @@ const Page = () => {
               temp={Math.round(data.current.feelslike_c)}
               rain={data.current.precip_mm}
             />
-            
           </div>
 
           <div className="section1">
@@ -257,30 +282,29 @@ const Page = () => {
 
           {/* ASTRONOMY AND MARINE DATA */}
           <div className="section2">
-          <div className="section-title-small">
+            <div className="section-title-small">
               <Image src={Moon} width={20} height={20} alt="" />
               Look to the Skies
             </div>
-            { adata &&
-         
-            <Astronomy 
-            sunrise={adata.astronomy.astro.sunrise}
-            sunset={adata.astronomy.astro.sunset}
-            moonrise={adata.astronomy.astro.moonrise}
-            moonset={adata.astronomy.astro.moonset}
-            />
-   
-            }
+            {adata && (
+              <Astronomy
+                sunrise={adata.astronomy.astro.sunrise}
+                sunset={adata.astronomy.astro.sunset}
+                moonrise={adata.astronomy.astro.moonrise}
+                moonset={adata.astronomy.astro.moonset}
+              />
+            )}
             <div className="section-title-small">
               <Image src={Anchor} width={20} height={20} alt="" />
               Sail the Seas
             </div>
-            {
-              mdata && mdata.error ? <div className="message">No marine data available for this location</div> :
-            
-            <Marine data={mdata}/>
-            
-            }
+            {mdata && mdata.error ? (
+              <div className="message">
+                No marine data available for this location
+              </div>
+            ) : (
+              <Marine data={mdata} />
+            )}
           </div>
         </div>
       </PageTemplate>
