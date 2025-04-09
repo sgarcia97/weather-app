@@ -24,10 +24,6 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [userProfile, setUserProfile] = useState([]);
 
-  const getProfile = async (user) => {
-    return await getUserInfo(user.uid);
-  };
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
@@ -119,6 +115,7 @@ export const AuthProvider = ({ children }) => {
         firebaseSignOut,
         changePassword,
         userProfile,
+        setUserProfile,
       }}
     >
       {children}

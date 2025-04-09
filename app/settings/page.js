@@ -11,11 +11,9 @@ import { updateUserInfo } from "../services/dataServices";
 import generateWeatherDisplayName from "../utils/nameGenerator";
 import "./profile.css";
 
-
-
 const Page = () => {
   const [showPasswordFields, setShowPasswordFields] = useState(false);
-  const { user, changePassword, userProfile } = useAuth();
+  const { user, changePassword, userProfile, setUserProfile } = useAuth();
   const [displayName, setDisplayName] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -48,6 +46,12 @@ const Page = () => {
         await updateUserInfo(user.uid, { displayName: newDisplayName });
         updates.push("Display name updated successfully.");
         setDisplayName(newDisplayName);
+
+        setUserProfile((prev) => ({
+          ...prev,
+          displayName: newDisplayName,
+        }));
+
         user.displayName = newDisplayName;
       }
 
@@ -98,7 +102,7 @@ const Page = () => {
               type="text"
               id="displayName"
               name="displayName"
-              placeholder="display name - will generate a random name if empty"
+              placeholder="display name"
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
             />
@@ -169,7 +173,6 @@ const Page = () => {
           name="Your saved locations"
           img={Img}
         />
-        <Setting name="Logout" img={Img} />{" "}
       </div>
     </PageTemplate>
   );

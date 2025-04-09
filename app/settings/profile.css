@@ -72,3 +72,11 @@
     color: #aaa; 
     opacity: 1; 
   }
+
+  .error-message {
+    color: red;
+  }
+
+  .success-message {
+    color: green;
+  }
