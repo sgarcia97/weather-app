@@ -1,5 +1,10 @@
+:root{
+--blue:#3291d5;
+--lblue:#86c3db;
+}
+
 .settings-container {
-    background: #fff;
+    background: #252525;
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -9,7 +14,7 @@
     font-size: 24px;
     text-align: center;
     margin-bottom: 24px;
-    color: #333;
+    color: #999;
   }
   
   .settings-form {
@@ -29,7 +34,7 @@
   .form-row label {
     width: 160px;
     font-weight: 500;
-    color: #555;
+    color: #777;
   }
   
   .form-row input[type="text"],
@@ -37,8 +42,12 @@
     flex: 1;
     padding: 8px 12px;
     font-size: 16px;
+    color:#dadada;
     border: 1px solid #ccc;
-    border-radius: 6px;
+    border-radius: 0px;
+    background-color:transparent;
+    border:none;
+    border-bottom:solid 1px #505050;
   }
   
   .checkbox-row {
@@ -49,7 +58,7 @@
   .submit-btn {
     margin-top: 16px;
     padding: 10px 16px;
-    background-color: #2563eb;
+    background-color: var(--blue);
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -58,7 +67,7 @@
   }
   
   .submit-btn:hover {
-    background-color: #1e40af;
+    background-color: var(--lblue);
   }
   
   .settings-links {

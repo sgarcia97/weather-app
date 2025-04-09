@@ -34,13 +34,31 @@ import Astronomy from "./components/Astronomy";
 import Marine from "./components/Marine";
 
 const Page = () => {
-  const [data, setData] = useState(null);
-  const [adata, setAData] = useState(null);
-  const [mdata, setMData] = useState(null);
-  const [degree, setDegree] = useState(false);
+
+  const [data, setData] = useState(null)
+  const [adata, setAData] = useState(null)
+  const [mdata, setMData] = useState(null)
+  const [degree, setDegree] = useState(false)
+  const [deg, setDeg] = useState("C")
   const { user, userProfile } = useAuth();
 
   useEffect(() => {
+    const checkDegree = () => {
+      if(!localStorage.deg){
+        localStorage.deg = "C"
+        setDegree(false)
+        setDeg(localStorage.deg)
+      }else{
+        if(localStorage.deg == "C"){
+          setDegree(false)
+        }else{
+          setDegree(true)
+        }
+        setDeg(localStorage.deg)
+        console.log('set',localStorage.deg)
+      }
+    }
+    checkDegree()
     forecastData().then((d) => setData(d));
     astronomyData().then((d) => setAData(d));
     marineData().then((d) => {
@@ -55,8 +73,10 @@ const Page = () => {
   };
 
   const handleDegree = (e) => {
-    setDegree(!degree);
-  };
+    setDegree(!degree)
+    let test = !degree ? "F" : "C"
+    localStorage.setItem('deg',test)
+  }
 
   if (!data)
     return (
@@ -88,9 +108,8 @@ const Page = () => {
 
         <div className="section-title">
           <div className="section-title-sect">
-            <Image alt="weather" width={20} height={20} src={location} />
-            {data.location.name}, {data.location.country} | Last updated{degree}
-            {moment(data.current.last_updated).format("ddd MMM D [at] h:mma")}
+          <Image alt="weather" width={20} height={20} src={location} />
+          {data.location.name}, {data.location.country} | {deg} Last updated {moment(data.current.last_updated).format("ddd MMM D [at] h:mma")}
           </div>
           <div className="h-align1">
             <div className="icon-wrapper" onClick={handleRefresh}>
@@ -220,40 +239,6 @@ const Page = () => {
               rain={data.current.precip_mm}
             />
           </div>
-          <div className="section-title-small">Marine Data</div>
-          {mdata && mdata.forecast?.forecastday?.[0]?.hour?.[0] && (
-            <div className="mt-6">
-              <h2 className="text-xl font-bold mb-2">Marine Conditions</h2>
-              <table className="table-auto w-full border">
-                <thead>
-                  <tr className="bg-blue-100">
-                    <th className="p-2 border">Time</th>
-                    <th className="p-2 border">Wave Height (ft)</th>
-                    <th className="p-2 border">Swell Height (ft)</th>
-                    <th className="p-2 border">Swell Direction</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="text-center">
-                    <td className="p-2 border">
-                      {mdata.forecast.forecastday[0].hour[0].time || "-"}
-                    </td>
-                    <td className="p-2 border">
-                      {mdata.forecast.forecastday[0].hour[0].wave_height_ft ||
-                        "-"}
-                    </td>
-                    <td className="p-2 border">
-                      {mdata.forecast.forecastday[0].hour[0].swell_height_ft ||
-                        "-"}
-                    </td>
-                    <td className="p-2 border">
-                      {mdata.forecast.forecastday[0].hour[0].swell_dir || "-"}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          )}
 
           <div className="section1">
             <Item
