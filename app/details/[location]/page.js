@@ -379,9 +379,9 @@ const Page = () => {
               Sail the Seas
             </div>
             {
-              mdata && mdata.error ? <div className="message">No marine data available for this location</div> :
+              //mdata && mdata.error ? <div className="message">No marine data available for this location</div> :
             
-            <Marine data={mdata}/>
+            //<Marine data={mdata}/>
             
             }
           </div>
