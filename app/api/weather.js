@@ -1,7 +1,7 @@
 import moment from "moment";
 
 export const forecastData = async (location = "auto:ip") => {
-  const url = `https://api.weatherapi.com/v1/forecast.json?q=${location}&days=7&aqi=yes&alerts=yes&key=${process.env.NEXT_PUBLIC_ANTI}`;
+  const url = `https://api.weatherapi.com/v1/forecast.json?q=${location}&days=3&aqi=yes&alerts=yes&key=${process.env.NEXT_PUBLIC_ANTI}`;
   const options = {
     method: "GET",
   };

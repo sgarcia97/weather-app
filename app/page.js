@@ -298,13 +298,13 @@ const Page = () => {
               <Image src={Anchor} width={20} height={20} alt="" />
               Sail the Seas
             </div>
-            {mdata && mdata.error ? (
-              <div className="message">
-                No marine data available for this location
-              </div>
-            ) : (
-              <Marine data={mdata} />
-            )}
+
+            {
+             // mdata && mdata.error ? <div className="message">No marine data available for this location</div> :
+            
+            //<Marine data={mdata}/>
+            
+            }
           </div>
         </div>
       </PageTemplate>
